@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-<span>Ana Sayfa</span>
+<span>Action is successful!</span>
 </body>
 </html>
