@@ -4,9 +4,9 @@
 "http://struts.apache.org/dtds/struts-2.3.dtd">
  
 <struts>
- 
-	<package name="default" namespace="/Tutorials" extends="struts-default">
-	<action name="getTutorial" class="org.sourcelesslight.actions.TutorialAction">
+	
+	<package name="authentication" namespace="/Authentication" extends="struts-default">
+	<action name="login" class="org.sourcelesslight.actions.LoginAction">
 		<result name="success">/success.jsp</result>
 		<result name="failure">/failure.jsp</result>
 	</action>
