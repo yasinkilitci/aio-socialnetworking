@@ -42,11 +42,20 @@
 				</property> 
 		</bean>
 		
+		<!--  Messages and Property Files -->
+		
+		<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+			<property name="basenames">
+				<list>
+					<value>classpath:/main/resources/resourcebundles/spring_messages</value>
+				</list>
+			</property>
+		</bean>
+		 
 		<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 			<property name="locations">
 				<list>
-					<value>classpath:/main/resources/spring.messagecollection.properties</value>
-					<value>classpath:/main/resources/spring.socialnetworking.properties</value>
+					<value>classpath:/main/resources/resourcebundles/spring.socialnetworking.properties</value>
 				</list>
 			</property>
 		</bean>
@@ -54,17 +63,20 @@
 		<!-- Business Services -->
 		
 		<bean id="AuthenticationService" class="org.sourcelesslight.services.AuthenticationService" />
+		<bean id="UserService" class="org.sourcelesslight.services.UserService">
+			<property name="sessionFactory" ref="sessionFactory"/>
+		</bean>
+		<bean id="PreferencesService" class="org.sourcelesslight.services.PreferencesService">
+			<property name="sessionFactory" ref="sessionFactory"/>
+		</bean>
 		<bean id="GenericService" class="org.sourcelesslight.services.GenericService" />
 		
 		<!-- Bean Definitions for DAO's 
 		
-		<bean id="KulDAO" class="com.dao.UserDAO"/>
-		<bean id="TurDAO" class="com.dao.DeviceTypeDAO"/>
+		
 		<bean id="CihazDAO" class="com.dao.DeviceDAO">
 			<property name="expiration" value="${expiration}"/>
 		</bean>
-		<bean id="UreticiDAO" class="com.dao.VendorDAO"/>
-		<bean id="SorumlulukDAO" class="com.dao.ResponsibilityDAO"/>
 		-->
 		
     	<!-- Aspect Oriented Programming (AOP) 

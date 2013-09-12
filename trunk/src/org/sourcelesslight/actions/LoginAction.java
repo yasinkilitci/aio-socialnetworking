@@ -1,11 +1,15 @@
 package org.sourcelesslight.actions;
 
+import java.io.IOException;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.sourcelesslight.model.User;
 import org.sourcelesslight.services.AuthenticationService;
@@ -14,15 +18,20 @@ import org.springframework.context.support.AbstractApplicationContext;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-public class LoginAction extends ActionSupport implements ServletRequestAware, SessionAware {
+public class LoginAction extends ActionSupport implements ServletRequestAware, SessionAware,ServletResponseAware {
 
 	// Parameters
 	private String username;
 	private String password;
 	// Parameters
 	
-	private AuthenticationService authService; 
+	// Get an actual user record from database with current username and password parameters
+	private AuthenticationService authService;
+	
+	// Retrieve request and session objects, any changes made to these will be reflected to actual ones.
 	private HttpServletRequest request;
+	private HttpServletResponse response;
+	private Map<String, Object> session;
 	
 	public String execute()
 	{
@@ -39,12 +48,27 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
 				if(user!=null)
 				{
 					System.out.println("SUCCESSFULLY LOGGED IN!");
+					Map<String, Object> parameters = this.getSession();
+					parameters.put("id", user.getUserId());
+					HttpServletResponse lresponse = this.getServletResponse();
+					lresponse.setStatus(200);
 					return SUCCESS;
 				}
 				else
 				{
 					System.err.println("LOGIN FAILED!");
-					return "failure";
+					HttpServletResponse lresponse = this.getServletResponse();
+					try 
+					{
+						lresponse.getWriter().write(context.getMessage("0001",null,"Login Error!",Locale.US));
+					} 
+					catch (IOException e) 
+					{
+						e.printStackTrace();
+					}
+					
+					lresponse.setStatus(403);
+					return null;
 				}
 		}
 		return SUCCESS;
@@ -53,7 +77,15 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
 	@Override
 	public void setServletRequest(HttpServletRequest request) {
 		this.request = request;
-		
+	}
+	
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
+	}
+	
+	public Map<String, Object> getSession() {
+		return this.session;
 	}
 	
 	public String getUsername() {
@@ -73,8 +105,12 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
 	}
 
 	@Override
-	public void setSession(Map<String, Object> arg0) {
-		// TODO Auto-generated method stub
-		
+	public void setServletResponse(HttpServletResponse response) {
+		this.response = response;
+	}
+	
+	public HttpServletResponse getServletResponse()
+	{
+		return this.response;
 	}
 }

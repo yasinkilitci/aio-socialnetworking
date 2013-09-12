@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<span>Action is successful!</span>
+<script>
+window.location.href = "${pageContext.request.contextPath}";
+</script>
 </body>
 </html>
