@@ -5,21 +5,59 @@
  
 <struts>
 	
-	<package name="authentication" namespace="/Authentication" extends="struts-default">
-	<action name="login" class="org.sourcelesslight.actions.LoginAction">
-		<result name="success">/success.jsp</result>
-		<result name="failure">/failure.jsp</result>
-	</action>
+	<include file="struts.interceptors.xml"></include>
+
+	<package name="authentication" namespace="/Authentication" extends="customInterceptors">
+
+		<action name="login" class="org.sourcelesslight.actions.LoginAction">
+			<interceptor-ref name="customStack01"/>
+			<result name="success" type="redirectAction">
+			 	<param name="actionName">welcome</param>
+            	<param name="namespace">/</param>
+			</result>
+			<result name="error">/Pages/Anonymous/Authentication/failure.jsp</result>
+		</action>
+		
+		<action name="logout" class="org.sourcelesslight.actions.LogoutAction">
+			<interceptor-ref name="customStack01"/>
+			<result name="success" type="redirectAction">
+			 	<param name="actionName">welcome</param>
+            	<param name="namespace">/</param>
+			</result>
+			<result name="error">/Pages/Anonymous/Authentication/failure.jsp</result>
+		</action>
+	
 	</package>
 	
-	<!-- 
-	<package name="user" namespace="/User" extends="struts-default">
-		<action name="Login">
-			<result>pages/login.jsp</result>
+	<package name="registration" namespace="/Registration" extends="customInterceptors">
+
+		<action name="signup" class="org.sourcelesslight.actions.SignupAction">
+			<interceptor-ref name="customStack01"/>
+			<result name="success" type="redirectAction">
+			 	<param name="actionName">welcome</param>
+            	<param name="namespace">/</param>
+			</result>
 		</action>
-		<action name="Welcome" class="com.mkyong.user.action.WelcomeUserAction">
-			<result name="SUCCESS">pages/welcome_user.jsp</result>
-		</action>
-	</package> -->
+		
+	</package>
+	
+	<package name="settings" namespace="/ControlPanel" extends="struts-default">
  
+		   <action name="settings" class="org.sourcelesslight.actions.SettingsAction">
+			<result name="success">/Pages/User/settings.jsp</result>
+		   </action>
+		 
+		   <action name="resultAction" class="org.sourcelesslight.actions.SettingsAction">
+			<result name="success">pages/result.jsp</result>
+		   </action>
+		   
+  	</package>
+
+	<package name="default" namespace="/" extends="customInterceptors">
+		<action name="welcome">
+			<interceptor-ref name="customStack01"/>
+			<result>/index.jsp</result>
+		</action>
+	</package>
+	
 </struts>

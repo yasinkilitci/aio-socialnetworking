@@ -1,0 +1,83 @@
+    input 
+    { 
+        margin-bottom: .5em;  
+        border: 1px solid gray;
+    }
+
+    input.valid
+    { 
+        animation: anim_valid 1s 0.5s ease;
+        -webkit-animation: anim_valid 0.5s ease;
+        margin-bottom: .5em;
+        background: rgba(150,255,150,1); 
+        border: 1px solid green; 
+    }
+
+    input.valid:hover
+    { 
+        background: rgba(130,255,130,1); 
+    }
+    
+    input.error 
+    { 
+        animation: anim_invalid 1s 0.5s ease;
+        -webkit-animation: anim_invalid 0.5s ease;
+        background: rgba(255,230,150,1); 
+        border: 1px solid red; 
+    }
+
+    input.error:hover
+    {
+        background: rgba(255,230,150,1); 
+    }
+
+    label.error 
+    {
+	    animation: anim_label_invalid 0.5s ease;
+        background: url('../Images/Icons/cross_mini.png') no-repeat;
+	    padding-left: 16px;
+	    margin-left: .3em;
+    }
+
+    label.valid {
+	    background: url('../Images/Icons/tick_mini.png') no-repeat;
+	    display: block;
+	    width: 16px;
+	    height: 16px;
+    }
+
+    @keyframes anim_invalid
+    {
+    from {border: 1px solid rgba(255,255,255,1);}
+    to {border: 1px solid rgba(150,255,150,1);}
+    }
+
+    @-webkit-keyframes anim_invalid /* Safari and Chrome */
+    {
+    from {border: 1px solid rgba(255,255,255,1);}
+    to {border: 1px solid rgba(255,0,0,1);}
+    }
+
+    @keyframes anim_valid
+     {
+    from {border: 1px solid rgba(255,0,0,1);}
+    to {border: 1px solid rgba(0,255,0,1);}
+    }
+
+    @-webkit-keyframes anim_valid /* Safari and Chrome */
+    {
+    from {border: 1px solid rgba(255,0,0,1);}
+    to {border: 1px solid rgba(0,255,0,1);}
+    }
+
+    @keyframes anim_label_invalid
+     {
+    from {font-style:normal;color:black}
+    to {font-style:italic;color:red}
+    }
+
+    @-webkit-keyframes anim_label_invalid /* Safari and Chrome */
+    {
+    from {font-style:normal;color:black}
+    to {font-style:italic;color:red}
+    }

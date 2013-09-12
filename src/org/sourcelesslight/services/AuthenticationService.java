@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.sourcelesslight.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Repository
@@ -14,6 +15,7 @@ public class AuthenticationService {
 	@Autowired(required=true)
 	private SessionFactory sessionFactory;
 	
+	@Transactional(readOnly=true)
 	public User performLogin(String username, String password) throws HibernateException
 	{
 		try
