@@ -5,6 +5,7 @@
 div.menu-wrapper,div.content-wrapper,div.copyright-wrapper
 {
     border: 1px solid #339200;
+    font-family: Calibri;
 }
 
 div.header-wrapper{
