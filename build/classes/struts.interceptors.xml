@@ -17,6 +17,15 @@
 			</interceptor-stack>
 			
 		</interceptors>
+		
+		<global-results>
+    		
+    		<result name="loginRedirect" type="redirectAction">
+			 	<param name="actionName">welcome</param>
+            	<param name="namespace">/</param>
+			</result>
+			
+		</global-results>
 	
 	</package>
 

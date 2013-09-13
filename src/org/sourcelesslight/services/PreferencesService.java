@@ -27,7 +27,7 @@ public class PreferencesService {
 		{
 			session.saveOrUpdate(preferences);
 			user.setPreferences(preferences);
-			session.save(user);
+			session.saveOrUpdate(user);
 			tx.commit();
 			session.close();
 		}

@@ -41,14 +41,18 @@
 		
 	</package>
 	
-	<package name="settings" namespace="/ControlPanel" extends="struts-default">
+	<package name="settings" namespace="/ControlPanel" extends="customInterceptors">
  
 		   <action name="settings" class="org.sourcelesslight.actions.SettingsAction">
+		   	<interceptor-ref name="customStack01"/>
 			<result name="success">/Pages/User/settings.jsp</result>
 		   </action>
 		 
-		   <action name="resultAction" class="org.sourcelesslight.actions.SettingsAction">
-			<result name="success">pages/result.jsp</result>
+		   <action name="savePreferences" class="org.sourcelesslight.actions.SaveSettingsAction">
+				<result name="success" type="redirectAction">
+				 	<param name="actionName">welcome</param>
+	            	<param name="namespace">/</param>
+				</result>
 		   </action>
 		   
   	</package>
