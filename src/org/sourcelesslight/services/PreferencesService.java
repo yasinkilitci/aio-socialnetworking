@@ -9,7 +9,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.sourcelesslight.model.Preferences;
 import org.sourcelesslight.model.Theme;
-import org.sourcelesslight.model.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,15 +18,13 @@ public class PreferencesService {
 	private SessionFactory sessionFactory;
 	
 	@Transactional(readOnly=false)
-	public void savePreferencesForUser(User user,Preferences preferences)
+	public void updatePreferences(Preferences preferences)
 	{
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		try
 		{
 			session.saveOrUpdate(preferences);
-			user.setPreferences(preferences);
-			session.saveOrUpdate(user);
 			tx.commit();
 			session.close();
 		}

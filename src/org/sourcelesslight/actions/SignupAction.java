@@ -23,6 +23,9 @@ import com.opensymphony.xwork2.ModelDriven;
 
 public class SignupAction extends ActionSupport implements ModelDriven<User>,ServletRequestAware, ServletResponseAware {
 
+	//This prevents serializing the class to file and deserialize as a different version of class.
+	private static final long serialVersionUID = 1000L;
+	
 	private HttpServletResponse response;
 	private HttpServletRequest request;
 	private PreferencesService preferencesService;
@@ -60,8 +63,7 @@ public class SignupAction extends ActionSupport implements ModelDriven<User>,Ser
 		
 		user.setRegDate(new Date());
 		user.setAuthLevel(2);
-		
-		preferencesService.savePreferencesForUser(user, preferences);
+		userService.savePreferencesWithUser(user, preferences);
 		
 		HttpServletResponse lresponse = getServletResponse();
 		lresponse.setStatus(200);

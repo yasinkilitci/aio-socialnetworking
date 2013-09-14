@@ -20,6 +20,9 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class LoginAction extends ActionSupport implements ServletRequestAware, SessionAware,ServletResponseAware {
 
+	//This prevents serializing the class to file and deserialize as a different version of class.
+	private static final long serialVersionUID = 1000L;
+	
 	// Parameters
 	private String username;
 	private String password;
