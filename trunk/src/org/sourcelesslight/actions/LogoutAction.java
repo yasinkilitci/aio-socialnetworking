@@ -11,8 +11,9 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class LogoutAction extends ActionSupport implements ServletRequestAware, SessionAware {
 
-	// Retrieve request and session objects, any changes made to these will be reflected to actual ones.
-	private HttpServletRequest request;
+	//This prevents serializing the class to file and deserialize as a different version of class.
+	private static final long serialVersionUID = 1000L;
+	
 	private Map<String, Object> session;
 	
 	public String execute()
@@ -35,7 +36,6 @@ public class LogoutAction extends ActionSupport implements ServletRequestAware, 
 
 	@Override
 	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
 	}
 
 }

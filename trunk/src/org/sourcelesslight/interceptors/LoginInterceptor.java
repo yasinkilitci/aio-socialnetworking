@@ -2,10 +2,6 @@ package org.sourcelesslight.interceptors;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.apache.struts2.interceptor.SessionAware;
 import org.sourcelesslight.actions.LoginAction;
 import org.sourcelesslight.actions.LoginRequired;
 
@@ -14,7 +10,9 @@ import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
 public class LoginInterceptor extends AbstractInterceptor {
-
+	
+		//This prevents serializing the class to file and deserialize as a different version of class.
+		private static final long serialVersionUID = 1000L;
 	 	
 	
 		@Override

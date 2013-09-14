@@ -1,12 +1,10 @@
 package org.sourcelesslight.actions;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.hibernate.HibernateException;
@@ -23,6 +21,9 @@ import com.opensymphony.xwork2.ModelDriven;
 
 public class SaveSettingsAction extends ActionSupport implements ModelDriven<Theme>,LoginRequired,SessionAware,ServletResponseAware  {
 
+	//This prevents serializing the class to file and deserialize as a different version of class.
+	private static final long serialVersionUID = 1000L;
+	
 	private AbstractApplicationContext context = ApplicationContextProvider.getApplicationContext();
 	private PreferencesService preferencesService;
 	private UserService userService;
@@ -45,7 +46,7 @@ public class SaveSettingsAction extends ActionSupport implements ModelDriven<The
 		Preferences pr = new Preferences();
 		pr = user.getPreferences();
 		pr.setTheme(this.getModel());
-		preferencesService.savePreferencesForUser(user, pr);
+		preferencesService.updatePreferences(pr);
 		HttpServletResponse lresponse = this.getServletResponse();
 		lresponse.setStatus(200);
 		try {

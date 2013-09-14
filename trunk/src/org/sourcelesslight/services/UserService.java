@@ -4,6 +4,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.sourcelesslight.model.Preferences;
 import org.sourcelesslight.model.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,25 @@ public class UserService {
 		catch(HibernateException h)
 		{
 			throw h;
+		}
+	}
+	
+	@Transactional(readOnly=false)
+	public void savePreferencesWithUser(User user,Preferences preferences)
+	{
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		try
+		{
+			session.saveOrUpdate(preferences);
+			user.setPreferences(preferences);
+			session.saveOrUpdate(user);
+			tx.commit();
+			session.close();
+		}
+		catch(HibernateException e)
+		{
+			throw e;
 		}
 	}
 	

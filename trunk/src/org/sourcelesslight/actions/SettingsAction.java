@@ -15,6 +15,9 @@ import com.opensymphony.xwork2.ActionSupport;
  
 public class SettingsAction extends ActionSupport implements LoginRequired,SessionAware,ServletResponseAware{
  
+	//This prevents serializing the class to file and deserialize as a different version of class.
+	private static final long serialVersionUID = 1000L;
+	
 	private AbstractApplicationContext context = ApplicationContextProvider.getApplicationContext();
 	private PreferencesService preferencesService;
 	private HttpServletResponse response;
