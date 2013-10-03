@@ -45,6 +45,7 @@ public class UserService {
 		}
 		catch(HibernateException e)
 		{
+		
 			throw e;
 		}
 	}
