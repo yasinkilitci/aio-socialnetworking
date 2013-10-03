@@ -8,14 +8,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="PREFERENCES")
 public class Preferences {
 
+	@SequenceGenerator(allocationSize=1, initialValue=1, sequenceName="ID_PREFERENCES_GENERATOR", name="ID_PREFERENCES_GENERATOR")
+	@GeneratedValue(generator="ID_PREFERENCES_GENERATOR", strategy=GenerationType.SEQUENCE)
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="ID_PREFERENCES")
 	private int id;
 

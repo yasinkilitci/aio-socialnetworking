@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,8 +18,10 @@ import javax.persistence.TemporalType;
 @Table(name="USERS")
 public class User {
 	
+	
+	@SequenceGenerator(allocationSize=1, initialValue=1, sequenceName="ID_USERS_GENERATOR", name="ID_USERS_GENERATOR")
+	@GeneratedValue(generator="ID_USERS_GENERATOR", strategy=GenerationType.SEQUENCE)
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="ID_USERS")
 	private int userId;
 	
@@ -105,5 +108,6 @@ public class User {
 	public void setPreferences(Preferences preferences) {
 		this.preferences = preferences;
 	}
+	
 	
 }

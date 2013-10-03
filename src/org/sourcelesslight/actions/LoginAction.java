@@ -45,6 +45,7 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
 			{
 				return "failure";
 			}
+			
 			AbstractApplicationContext context = ApplicationContextProvider.getApplicationContext();
 			authService = context.getBean("AuthenticationService",AuthenticationService.class);
 			User user = authService.performLogin(username, password);

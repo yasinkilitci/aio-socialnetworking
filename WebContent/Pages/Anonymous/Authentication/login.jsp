@@ -3,16 +3,16 @@
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Styles/Validation.css"></link>
 
-<s:form action="Authentication/login">
-	<s:textfield label="Username" key="username"/>
-	<s:password label="Password" key="password"/>
-	<s:submit align="left" value="Login Now" />
+<s:form id="frmLogin" action="Authentication/login">
+	<s:textfield id="txtUsername" label="Username" key="username"/>
+	<s:password id="txtPassword" label="Password" key="password"/>
+	<s:submit id="btnLogin" align="left" value="Login Now" />
 </s:form>
 
 <script>
-$("#login_0").button();
+$("#btnLogin").button();
 
-$("#login").validate({
+$("#frmLogin").validate({
     rules: {
         username: { required: true },
         password: { required: true }
@@ -24,12 +24,12 @@ $("#login").validate({
     }
 });
 
-$("#login").submit(function(e){
+$("#frmLogin").submit(function(e){
     return false;
 });
 
-$("#login_0").click(function () {
-    var isvalid = $("#login").valid();
+$("#btnLogin").click(function () {
+    var isvalid = $("#frmLogin").valid();
     if (isvalid)
         sendCreateFormViaAjax();
 });
@@ -38,10 +38,10 @@ function sendCreateFormViaAjax() {
     
     var formData =
         {
-            username: $("#login_username").val(),
-            password: $("#login_password").val()
+            username: $("#txtUsername").val(),
+            password: $("#txtPassword").val()
         };
-
+    
         $.ajax({
             url: "Authentication/login",
             data: formData,

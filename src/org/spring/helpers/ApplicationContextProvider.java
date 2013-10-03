@@ -9,7 +9,7 @@ public class ApplicationContextProvider {
 	
 	private static AbstractApplicationContext buildApplicationContext()
 	{
-		return new ClassPathXmlApplicationContext("/main/resources/spring.cfg.xml");
+		return new ClassPathXmlApplicationContext("/main/resources/spring.postgres.cfg.xml");
 	}
 	
 	public static AbstractApplicationContext getApplicationContext()

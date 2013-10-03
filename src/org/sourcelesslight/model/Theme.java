@@ -5,14 +5,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="THEMES")
 public class Theme {
 
+	@SequenceGenerator(allocationSize=1, initialValue=1, sequenceName="ID_THEMES_GENERATOR", name="ID_THEMES_GENERATOR")
+	@GeneratedValue(generator="ID_THEMES_GENERATOR", strategy=GenerationType.SEQUENCE)
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="ID_THEMES")
 	private int themeId;
 	
