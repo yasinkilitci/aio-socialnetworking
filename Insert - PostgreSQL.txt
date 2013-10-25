@@ -1,0 +1,68 @@
+http://stackoverflow.com/questions/13107502/generatedvalue-in-postgres
+http://stackoverflow.com/questions/4979746/mapping-postgresql-serial-type-with-hibernate-annotations
+
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'black-tie');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'blitzer');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'cupertino');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'dark-hive');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'dot-luv');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'eggplant');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'excite-bike');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'flick');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'humanity');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'le-frog');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'mint-choc');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'overcast');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'pepper-grinder');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'redmond');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'smoothness');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'south-street');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'start');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'sunny');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'swanky-purse');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'trontastic');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'ui-darkness');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'ui-lightness');
+INSERT INTO themes(ID_THEMES,NAME) VALUES (nextval('ID_THEMES_GENERATOR'),'vader');
+
+INSERT INTO preferences(ID_PREFERENCES,ID_THEMES) VALUES (nextval('ID_PREFERENCES_GENERATOR'),18);
+INSERT INTO preferences(ID_PREFERENCES,ID_THEMES) VALUES (nextval('ID_PREFERENCES_GENERATOR'),21);
+
+INSERT INTO users(ID_USERS, AUTHLEVEL, EMAIL, FNAME, LNAME, PASSWORD, REGDATE, USERNAME,ID_PREFERENCES) VALUES (nextval('ID_USERS_GENERATOR'),1,'ilkeryasinyildiz@gmail.com','Ýlker Yasin','Yýldýz','123456','2013-09-06 13:45:12','ilker',1);
+INSERT INTO users(ID_USERS, AUTHLEVEL, EMAIL, FNAME, LNAME, PASSWORD, REGDATE, USERNAME,ID_PREFERENCES) VALUES (nextval('ID_USERS_GENERATOR'),1,'gokcenurakyol@gmail.com','Gökçenur','Akyol','123456','2013-09-06 13:45:12','gokcenur',2);
+
+
+
+fonksiyon oluþturma
+http://www.postgresql.org/docs/9.1/static/sql-createfunction.html
+fonksiyon çaðýrma
+http://www.postgresql.org/docs/9.1/static/sql-syntax-calling-funcs.html
+
+hibernate'te named query yapmak
+http://www.mkyong.com/hibernate/how-to-call-store-procedure-in-hibernate/
+
+
+Ýlk procedure
+
+CREATE TYPE type_users AS
+(
+	id_users integer,
+  authlevel integer,
+  email character varying(255),
+  fname character varying(255),
+  lname character varying(255),
+  password character varying(255),
+  regdate date,
+  username character varying(255),
+  id_preferences integer
+);
+
+CREATE OR REPLACE FUNCTION performLogin( username character varying(20), password character varying(20)) RETURNS type_users AS $$
+DECLARE
+   users_row type_users;
+BEGIN
+   
+   SELECT * FROM users u INTO users_row WHERE u.username=$1 AND u.password=$2;
+   RETURN users_row;
+END;
+$$ LANGUAGE plpgsql;
