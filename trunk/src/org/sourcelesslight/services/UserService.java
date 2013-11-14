@@ -4,6 +4,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.sourcelesslight.hashing.SHA256Hasher;
 import org.sourcelesslight.model.Preferences;
 import org.sourcelesslight.model.User;
 import org.springframework.stereotype.Repository;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
 	private SessionFactory sessionFactory;
+	private SHA256Hasher hasher;
 	
 	@Transactional(readOnly=true)
 	public User getUserById(int userId)
@@ -39,6 +41,7 @@ public class UserService {
 		{
 			session.saveOrUpdate(preferences);
 			user.setPreferences(preferences);
+			user.setPassword(hasher.encrypt(user.getPassword()));
 			session.saveOrUpdate(user);
 			tx.commit();
 			session.close();
@@ -97,6 +100,7 @@ public class UserService {
 		Transaction tx = session.beginTransaction();
 		try
 		{
+			user.setPassword(hasher.encrypt(user.getPassword()));
 			session.save(user);
 			tx.commit();
 			session.close();
@@ -131,6 +135,7 @@ public class UserService {
 		Transaction tx = session.beginTransaction();
 		try
 		{
+			user.setPassword(hasher.encrypt(user.getPassword()));
 			session.saveOrUpdate(user);
 			tx.commit();
 			session.close();
@@ -148,5 +153,14 @@ public class UserService {
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
+
+	public SHA256Hasher getHasher() {
+		return hasher;
+	}
+
+	public void setHasher(SHA256Hasher hasher) {
+		this.hasher = hasher;
+	}
+	
 	
 }

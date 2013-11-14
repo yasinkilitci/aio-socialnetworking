@@ -51,7 +51,7 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
 			User user = authService.performLogin(username, password);
 				if(user!=null)
 				{
-					System.out.println("SUCCESSFULLY LOGGED IN!");
+					/* Successful Login */
 					Map<String, Object> parameters = this.getSession();
 					parameters.put("id", user.getUserId());
 					HttpServletResponse lresponse = this.getServletResponse();
@@ -60,11 +60,11 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
 				}
 				else
 				{
-					System.err.println("LOGIN FAILED!");
+					/* Failed Login */
 					HttpServletResponse lresponse = this.getServletResponse();
 					try 
 					{
-						lresponse.getWriter().write(context.getMessage("0001",null,"Login Error!",Locale.US));
+						lresponse.getWriter().write(context.getMessage("0001",null,null,Locale.US));
 					} 
 					catch (IOException e) 
 					{
