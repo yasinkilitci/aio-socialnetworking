@@ -10,6 +10,7 @@
 		http://www.springframework.org/schema/context 
 		http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
+		
 		<!-- Hibernate - Database Configuration -->
 		
 		<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -62,34 +63,34 @@
 		
 		<!-- Business Services -->
 		
-		<bean id="AuthenticationService" class="org.sourcelesslight.services.AuthenticationService" />
+		<bean id="AuthenticationService" class="org.sourcelesslight.services.AuthenticationService">
+			<property name="sessionFactory" ref="sessionFactory"/>
+			<property name="hasher" ref="SHA256Hasher"/>
+		</bean>
+		
 		<bean id="UserService" class="org.sourcelesslight.services.UserService">
 			<property name="sessionFactory" ref="sessionFactory"/>
+			<property name="hasher" ref="SHA256Hasher"/>
 		</bean>
+		
 		<bean id="PreferencesService" class="org.sourcelesslight.services.PreferencesService">
 			<property name="sessionFactory" ref="sessionFactory"/>
 		</bean>
+		
 		<bean id="GenericService" class="org.sourcelesslight.services.GenericService" />
 		
-		<!-- Bean Definitions for DAO's 
+		<!-- Small Bean Classes -->
 		
+		<bean id="SHA256Hasher" class="org.sourcelesslight.hashing.SHA256Hasher" />
 		
-		<bean id="CihazDAO" class="com.dao.DeviceDAO">
-			<property name="expiration" value="${expiration}"/>
-		</bean>
-		-->
-		
-    	<!-- Aspect Oriented Programming (AOP) 
+		<!-- Aspect Oriented Programming -->
 
-			<aop:aspectj-autoproxy/>-->
+			<aop:aspectj-autoproxy/>
+			
+		<!-- AOP and Logging Related Beans -->
     	
-    	<!-- AOP and Logging Related Beans 
-    	
-    	<bean name="loggingAspect" class="com.aspect.LoggingAspect" />
-    	<bean name="loggingService" class="com.aspect.LoggingService" />
-    	
-    	-->
-    	
+    	<bean name="loggingAspect" class="org.sourcelesslight.aspects.LoggingAspect" />
+		
     	<!-- Packages to Scan for Spring Annotations -->
     	<context:component-scan base-package="org.sourcelesslight.services, org.sourcelesslight.aspects"/>
 		<context:annotation-config/>
