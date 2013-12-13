@@ -3,7 +3,7 @@ package org.sourcelesslight.interceptors;
 import java.util.Map;
 
 import org.sourcelesslight.actions.LoginAction;
-import org.sourcelesslight.actions.LoginRequired;
+import org.sourcelesslight.actions.interfaces.LoginRequired;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;

@@ -2,8 +2,12 @@ package org.sourcelesslight.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
@@ -13,6 +17,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.sourcelesslight.model.enums.AuthType;
 
 @Entity(name="USERS")
 @Table(name="USERS")
@@ -45,9 +53,11 @@ public class User {
 	private Date regDate;
 	
 	@Column(name="AUTHLEVEL")
-	private int authLevel;
+	@Enumerated(EnumType.ORDINAL)
+	private AuthType authLevel;
 	
-	@OneToOne
+	// Lazy initialize this until we manually initialize them
+	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="ID_PREFERENCES")
 	private Preferences preferences;
 	
@@ -95,13 +105,13 @@ public class User {
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
-	public int getAuthLevel() {
+	
+	public AuthType getAuthLevel() {
 		return authLevel;
 	}
-	public void setAuthLevel(int authLevel) {
+	public void setAuthLevel(AuthType authLevel) {
 		this.authLevel = authLevel;
 	}
-	
 	public Preferences getPreferences() {
 		return preferences;
 	}

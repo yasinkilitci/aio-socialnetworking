@@ -77,6 +77,10 @@
 			<property name="sessionFactory" ref="sessionFactory"/>
 		</bean>
 		
+		<bean id="FriendRequestService" class="org.sourcelesslight.services.FriendRequestService">
+			<property name="sessionFactory" ref="sessionFactory"/>
+		</bean>
+		
 		<bean id="GenericService" class="org.sourcelesslight.services.GenericService" />
 		
 		<!-- Small Bean Classes -->

@@ -25,6 +25,14 @@ $(document).ready(function(){
 		
 	});
 	
+	$("#lnkFind").click(function(){
+
+		$("div.content-wrapper").load("./FriendFinder/list");
+		
+	});
+	
+	
+	
 	
 	
 });

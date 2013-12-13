@@ -3,13 +3,18 @@ package org.sourcelesslight.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name="PREFERENCES")
@@ -20,8 +25,9 @@ public class Preferences {
 	@Id
 	@Column(name="ID_PREFERENCES")
 	private int id;
-
-	@ManyToOne(cascade=CascadeType.ALL)
+	
+	//CascadeType.PERSIST prevent theme table updating while updating Preferences
+	@ManyToOne(cascade=CascadeType.PERSIST,fetch=FetchType.LAZY)
 	@JoinColumn(name="ID_THEMES")
 	private Theme theme;
 	

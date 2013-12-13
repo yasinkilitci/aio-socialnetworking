@@ -2,15 +2,18 @@ package org.sourcelesslight.actions;
 
 
 import java.util.ArrayList;
-
 import java.util.Map;
+
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
+import org.sourcelesslight.actions.interfaces.LoginRequired;
 import org.sourcelesslight.model.Theme;
 import org.sourcelesslight.services.PreferencesService;
 import org.spring.helpers.ApplicationContextProvider;
 import org.springframework.context.support.AbstractApplicationContext;
+
 import com.opensymphony.xwork2.ActionSupport;
  
 public class SettingsAction extends ActionSupport implements LoginRequired,SessionAware,ServletResponseAware{

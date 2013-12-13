@@ -3,6 +3,7 @@
 <%@page import="org.sourcelesslight.services.UserService"%>
 <%@page import="org.spring.helpers.ApplicationContextProvider"%>
 <%@page import="org.springframework.context.support.AbstractApplicationContext"%>
+<%@page import="org.sourcelesslight.model.enums.AuthType"%>
   <%@ taglib prefix="s" uri="/struts-tags" %>
   
   	<script type="text/javascript" src="${pageContext.request.contextPath}/Scripts/menu.js"/></script>
@@ -11,8 +12,9 @@
 UserService us;
 User user = null;
 AbstractApplicationContext context = ApplicationContextProvider.getApplicationContext();
+Object sessionId = request.getSession().getAttribute("id");
 %>
-	<% if(request.getSession().getAttribute("id")==null){ %>
+	<% if(sessionId==null){ %>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Styles/themes/ui-lightness/jquery-ui.css"></link>
 	<script>
 $(function(){
@@ -23,13 +25,13 @@ $(function(){
 });
 </script>
 	<% } else {
-	int id = Integer.valueOf(request.getSession().getAttribute("id").toString());
+	int id = Integer.valueOf(sessionId.toString());
 	us = context.getBean("UserService",UserService.class);
 	
 	try{
 	user = us.getUserById(id);
-	int level = user.getAuthLevel();
-	if(level==1)
+	AuthType authType = user.getAuthLevel();
+	if(authType == AuthType.ADMIN)
 	{
 		%>
 		
@@ -40,7 +42,7 @@ $(function(){
 		</script>
 	<%
 	}
-	else if(level==2)
+	else if(authType == AuthType.USER)
 	{
 		%>
 	<script>
@@ -64,25 +66,25 @@ $(function(){
 	<%
 if(user!=null)
 {
-	int level = user.getAuthLevel();
+	AuthType authType = user.getAuthLevel();
 	String theme = user.getPreferences().getTheme().getThemeName();
 	%>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Styles/themes/<%=theme %>/jquery-ui.css"></link>
 	<%
 	
-	if(level==2)
+	if(authType == AuthType.USER)
 	{%>
 	<li><a href="#" id="lnkDiscover">Discover</a></li>
 	<li><a href="#" id="lnkFind">Find</a></li>
 	<li><a href="#" id="lnkMyProfile">My Profile</a></li>
 	<%
-	}else if(level==1)
+	}else if(authType == AuthType.ADMIN)
 	{%>
 	<li><a href="#" id="lnkDiscover">Manage Users</a></li>
 	<li><a href="#" id="lnkTools">Administrative Tools</a></li> 
 	<%}
 	
-	if(level>0)
+	if(authType == AuthType.USER || authType == AuthType.ADMIN)
 	{%>
 	<li><a href="#" id="lnkSettings">Settings</a></li>
 	<li><a href="<s:url action="Authentication/logout"/>">Log Out</a></li>

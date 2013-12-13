@@ -13,6 +13,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import org.sourcelesslight.model.Preferences;
 import org.sourcelesslight.model.Theme;
 import org.sourcelesslight.model.User;
+import org.sourcelesslight.model.enums.AuthType;
 import org.sourcelesslight.services.PreferencesService;
 import org.sourcelesslight.services.UserService;
 import org.spring.helpers.ApplicationContextProvider;
@@ -62,7 +63,7 @@ public class SignupAction extends ActionSupport implements ModelDriven<User>,Ser
 		preferences.setTheme(theme);
 		
 		user.setRegDate(new Date());
-		user.setAuthLevel(2);
+		user.setAuthLevel(AuthType.USER);
 		userService.savePreferencesWithUser(user, preferences);
 		
 		HttpServletResponse lresponse = getServletResponse();
