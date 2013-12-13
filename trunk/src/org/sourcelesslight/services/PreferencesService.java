@@ -24,7 +24,7 @@ public class PreferencesService {
 		Transaction tx = session.beginTransaction();
 		try
 		{
-			session.saveOrUpdate(preferences);
+			session.update(preferences);
 			tx.commit();
 			session.close();
 		}

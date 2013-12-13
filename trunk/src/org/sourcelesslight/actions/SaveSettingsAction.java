@@ -5,9 +5,12 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.hibernate.HibernateException;
+import org.sourcelesslight.actions.enums.HttpStatus;
+import org.sourcelesslight.actions.interfaces.LoginRequired;
 import org.sourcelesslight.model.Preferences;
 import org.sourcelesslight.model.Theme;
 import org.sourcelesslight.model.User;
@@ -22,7 +25,7 @@ import com.opensymphony.xwork2.ModelDriven;
 public class SaveSettingsAction extends ActionSupport implements ModelDriven<Theme>,LoginRequired,SessionAware,ServletResponseAware  {
 
 	//This prevents serializing the class to file and deserialize as a different version of class.
-	private static final long serialVersionUID = 1000L;
+	private static final long serialVersionUID = -5384546532697107457L;
 	
 	private AbstractApplicationContext context = ApplicationContextProvider.getApplicationContext();
 	private PreferencesService preferencesService;
@@ -39,36 +42,36 @@ public class SaveSettingsAction extends ActionSupport implements ModelDriven<The
 	
 	public String execute()
 	{
-		try{
-		Map<String, Object> parameters = this.getSession();
-		int id = Integer.valueOf(parameters.get("id").toString());
+		try
+		{
+		
+		int id = Integer.valueOf(getSession().get("id").toString());
 		User user = userService.getUserById(id);
-		Preferences pr = new Preferences();
-		pr = user.getPreferences();
+		Preferences pr = user.getPreferences();
 		pr.setTheme(this.getModel());
 		preferencesService.updatePreferences(pr);
-		HttpServletResponse lresponse = this.getServletResponse();
-		lresponse.setStatus(200);
-		try {
-			lresponse.getWriter().write(context.getMessage("0005",null,"Successfully Saved!", Locale.US));
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-		}
+		response.setStatus(HttpStatus.SUCCESSFUL.toInt());
+		response.getWriter().write(context.getMessage("0005",null,"Successfully Saved!", Locale.US));
 		return null;
 		}
 		catch(HibernateException h)
 		{
-			HttpServletResponse lresponse = this.getServletResponse();
-			lresponse.setStatus(502);
-			try {
-				lresponse.getWriter().write(context.getMessage("0004",null,"Error Saving Preferences!", Locale.US));
-			} catch (IOException e) {
-				
-				e.printStackTrace();
+			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.toInt());
+			try
+			{
+				response.getWriter().write(context.getMessage("0004",null,"Error Saving Preferences!", Locale.US));
 			}
-			return null;
+			catch(IOException ioe)
+			{
+				return null;
+			}
+			
 		}
+		catch (IOException e) 
+		{
+			
+		}
+		return null;
 	}
 	
 	@Override

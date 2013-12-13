@@ -1,5 +1,8 @@
 package org.sourcelesslight.services;
 
+import java.util.List;
+
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -7,6 +10,7 @@ import org.hibernate.Transaction;
 import org.sourcelesslight.hashing.SHA256Hasher;
 import org.sourcelesslight.model.Preferences;
 import org.sourcelesslight.model.User;
+import org.sourcelesslight.model.enums.AuthType;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +27,9 @@ public class UserService {
 		try
 		{
 			User user = (User)session.get(User.class, userId);
+			// Lazy initialization Exception happens if we don't initialize, preferences and theme for user
+			Hibernate.initialize(user.getPreferences());
+			Hibernate.initialize(user.getPreferences().getTheme());
 			session.close();
 			return user;
 		}
@@ -39,10 +46,10 @@ public class UserService {
 		Transaction tx = session.beginTransaction();
 		try
 		{
-			session.saveOrUpdate(preferences);
+			session.save(preferences);
 			user.setPreferences(preferences);
 			user.setPassword(hasher.encrypt(user.getPassword()));
-			session.saveOrUpdate(user);
+			session.update(user);
 			tx.commit();
 			session.close();
 		}
@@ -84,6 +91,24 @@ public class UserService {
 			
 			session.close();
 			return user;
+		}
+		catch(HibernateException h)
+		{
+			throw h;
+		}
+	}
+	
+	@Transactional(readOnly=true)
+	public List<User> getAllUsers()
+	{
+		Session session = sessionFactory.openSession();
+		try
+		{
+			List<User> users = (List<User>)session.createQuery("From USERS WHERE AUTHLEVEL=:authtype")
+					.setInteger("authtype", AuthType.USER.toInt())
+					.list();
+			session.close();
+			return users;
 		}
 		catch(HibernateException h)
 		{

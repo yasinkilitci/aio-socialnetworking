@@ -7,6 +7,16 @@
 	
 	<include file="struts.interceptors.xml"></include>
 
+	<package name="friendfinder" namespace="/FriendFinder" extends="struts-default">
+		<action name="list" class="org.sourcelesslight.actions.FriendFinderAction">
+			<result name="success">/Pages/User/friendfinder.jsp</result>
+			<result name="failure" type="redirectAction">
+			 	<param name="actionName">welcome</param>
+            	<param name="namespace">/</param>
+			</result>
+		</action>
+	</package>
+	
 	<package name="authentication" namespace="/Authentication" extends="customInterceptors">
 
 		<action name="login" class="org.sourcelesslight.actions.LoginAction">
