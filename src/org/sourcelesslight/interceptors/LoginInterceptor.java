@@ -44,12 +44,12 @@ public class LoginInterceptor extends AbstractInterceptor {
 
 		//called during interceptor destruction
 		public void destroy() {
-			System.out.println("LoginInterceptor destroy() is called...");
+			//System.out.println("LoginInterceptor destroy() is called...");
 		}
 	 
 		//called during interceptor initialization
 		public void init() {
-			System.out.println("LoginInterceptor init() is called...");
+			//System.out.println("LoginInterceptor init() is called...");
 		}
 
 		

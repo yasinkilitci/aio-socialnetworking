@@ -51,6 +51,7 @@
 			<property name="basenames">
 				<list>
 					<value>classpath:/main/resources/resourcebundles/spring_messages</value>
+					<value>classpath:/main/resources/resourcebundles/spring_logging_messages</value>
 				</list>
 			</property>
 		</bean>
