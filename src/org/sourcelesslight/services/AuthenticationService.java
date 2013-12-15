@@ -1,8 +1,10 @@
 package org.sourcelesslight.services;
 
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.sourcelesslight.hashing.SHA256Hasher;
 import org.sourcelesslight.model.User;
 import org.springframework.stereotype.Repository;
@@ -21,11 +23,12 @@ public class AuthenticationService {
 		try
 		{
 			Session session = sessionFactory.openSession();
-			String hql = "From USERS Where USERNAME=:username and PASSWORD=:password";
-			User user = (User)session.createQuery(hql)
-					.setString("username", username)
-					.setString("password",hasher.encrypt(password))
+			Criteria criteria = session.createCriteria(User.class);
+			User user= (User) criteria
+					.add(Restrictions.eq("username", username))
+					.add(Restrictions.eq("password", hasher.encrypt(password)))
 					.uniqueResult();
+			
 			session.close();
 			return user;
 		}

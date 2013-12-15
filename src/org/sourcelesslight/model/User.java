@@ -18,12 +18,18 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.sourcelesslight.model.enums.AuthType;
+import org.springframework.cache.annotation.Cacheable;
+
 
 @Entity(name="USERS")
 @Table(name="USERS")
+@Cacheable(value =  "Entity_User")
+@Cache(usage=CacheConcurrencyStrategy.READ_ONLY)
 public class User {
 	
 	
