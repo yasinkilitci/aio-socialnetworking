@@ -9,15 +9,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.cache.annotation.Cacheable;
 
 @Entity
 @Table(name="PREFERENCES")
+@Cacheable(value =  "Entity_Preferences")
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class Preferences {
 
 	@SequenceGenerator(allocationSize=1, initialValue=1, sequenceName="ID_PREFERENCES_GENERATOR", name="ID_PREFERENCES_GENERATOR")

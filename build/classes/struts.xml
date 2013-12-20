@@ -5,6 +5,8 @@
  
 <struts>
 	
+	<constant name="struts.devMode" value="false"/> 
+	
 	<include file="struts.interceptors.xml"></include>
 
 	<package name="friendfinder" namespace="/FriendFinder" extends="struts-default">
@@ -55,6 +57,7 @@
  
 		   <action name="settings" class="org.sourcelesslight.actions.SettingsAction">
 		   	<interceptor-ref name="customStack01"/>
+		   	
 			<result name="success">/Pages/User/settings.jsp</result>
 		   </action>
 		 

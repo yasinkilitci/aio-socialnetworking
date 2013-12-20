@@ -2,7 +2,6 @@ package org.sourcelesslight.services;
 
 import java.util.ArrayList;
 
-import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -34,15 +33,18 @@ public class PreferencesService {
 		}
 	}
 	
+	
+	@SuppressWarnings("unchecked")
 	@Transactional(readOnly=true)
 	public ArrayList<Theme> getAllThemes()
 	{
 		try
 		{
 			Session session = sessionFactory.openSession();
-			Criteria criteria = session.createCriteria(Theme.class);
-			@SuppressWarnings("unchecked")
-			ArrayList<Theme> themes = (ArrayList<Theme>) criteria.list();
+			ArrayList<Theme> themes = (ArrayList<Theme>) session
+					.createCriteria(Theme.class)
+					.setCacheable(true)
+					.list();
 			session.close();
 			return themes;
 		}

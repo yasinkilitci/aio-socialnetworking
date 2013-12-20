@@ -24,7 +24,7 @@ public class AuthenticationService {
 		{
 			Session session = sessionFactory.openSession();
 			Criteria criteria = session.createCriteria(User.class);
-			User user= (User) criteria
+			User user = (User) criteria
 					.add(Restrictions.eq("username", username))
 					.add(Restrictions.eq("password", hasher.encrypt(password)))
 					.uniqueResult();

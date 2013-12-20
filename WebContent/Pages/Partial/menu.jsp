@@ -14,6 +14,9 @@ User user = null;
 AbstractApplicationContext context = ApplicationContextProvider.getApplicationContext();
 Object sessionId = request.getSession().getAttribute("id");
 %>
+
+Welcome ${cookie["cookie_id"].value} thanks for logging in!
+
 	<% if(sessionId==null){ %>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Styles/themes/ui-lightness/jquery-ui.css"></link>
 	<script>

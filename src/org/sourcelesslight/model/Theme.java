@@ -8,8 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.cache.annotation.Cacheable;
+
 @Entity
 @Table(name="THEMES")
+@Cacheable(value =  "Entity_Themes")
+@Cache(usage=CacheConcurrencyStrategy.READ_ONLY)
 public class Theme {
 
 	@SequenceGenerator(allocationSize=1, initialValue=1, sequenceName="ID_THEMES_GENERATOR", name="ID_THEMES_GENERATOR")
