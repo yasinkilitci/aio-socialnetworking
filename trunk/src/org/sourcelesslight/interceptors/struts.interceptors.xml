@@ -8,22 +8,33 @@
 	<package name="customInterceptors" extends="struts-default">
 
 		<interceptors>
+			<!-- checks sessions and gain access to methods -->
 			<interceptor name="loginInterceptor"
 			class="org.sourcelesslight.interceptors.LoginInterceptor"/>
 			
+			<!-- converts cookie to session automatic login -->
+			<interceptor name="cookieToSessionInterceptor"
+			class="org.sourcelesslight.interceptors.CookieToSessionInterceptor"/>
+			
 			<interceptor-stack name="customStack01">
+				<interceptor-ref name="cookieToSessionInterceptor"/>
 				<interceptor-ref name="loginInterceptor"/>
-				<interceptor-ref name="defaultStack"/>
-				<interceptor-ref name="cookie">
-		   			<param name="cookiesName">cookie_id</param>
-		   			<param name="cookiesValue"></param>
-		   		</interceptor-ref>
-		   		<interceptor-ref name="cookieProvider"/>
+				<interceptor-ref name="basicStack"/>
 			</interceptor-stack>
 			
-			<interceptor-stack name="userLevelSecurityStack">
+			<interceptor-stack name="homeStack">
+				<interceptor-ref name="cookieToSessionInterceptor"/>
+				<interceptor-ref name="basicStack"/>
+			</interceptor-stack>
+			
+			<interceptor-stack name="userLevelSecurity">
+				<interceptor-ref name="cookie">
+		   			<param name="cookiesName">*</param>
+		   			<param name="cookiesValue">*</param>
+		   		</interceptor-ref>
+		   		<interceptor-ref name="cookieProvider"/>
+				<interceptor-ref name="cookieToSessionInterceptor"/>
 				<interceptor-ref name="loginInterceptor"/>
-				<interceptor-ref name="cookie"/>
 				<interceptor-ref name="basicStack"/>
 			</interceptor-stack>
 			

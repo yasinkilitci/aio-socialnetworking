@@ -19,6 +19,7 @@ import org.sourcelesslight.services.AuthenticationService;
 import org.spring.helpers.ApplicationContextProvider;
 import org.springframework.context.support.AbstractApplicationContext;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class LoginAction extends ActionSupport implements ServletRequestAware, SessionAware,ServletResponseAware,CookiesAware {
@@ -53,6 +54,7 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
 					return "failure";
 				}
 				
+				//request.getRemoteAddr();
 				AbstractApplicationContext context = ApplicationContextProvider.getApplicationContext();
 				authService = context.getBean("AuthenticationService",AuthenticationService.class);
 				User user = authService.performLogin(username, password);
@@ -64,13 +66,12 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
 						//set cookies if rememberMe is "true"
 						if(rememberMe)
 						{
-							Cookie cookie_id = new Cookie("cookie_id",String.valueOf(user.getUserId()));
-							cookie_id.setMaxAge(60*60*24);
-							cookie_id.setDomain("magnepal.com");
-							cookie_id.setPath("/");
+							Cookie cookie_id = new Cookie("MPUSERID",String.valueOf(user.getUserId()));
+							cookie_id.setMaxAge(60*60*24*365);
+							//cookie_id.setDomain("magnepal.com");
+							cookie_id.setPath("/SocialNetworking/");
 							response.addCookie(cookie_id);
 						}
-						
 						
 						response.setStatus(HttpStatus.SUCCESSFUL.toInt());
 						return SUCCESS;

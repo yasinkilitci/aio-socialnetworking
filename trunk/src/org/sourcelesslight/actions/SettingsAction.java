@@ -34,6 +34,7 @@ public class SettingsAction extends ActionSupport implements LoginRequired,Sessi
 	}
  
 	public String execute() {
+		
 		return SUCCESS;
 	}
  

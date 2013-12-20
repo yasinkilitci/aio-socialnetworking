@@ -7,8 +7,9 @@
 	
 	<constant name="struts.devMode" value="false"/> 
 	
-	<include file="struts.interceptors.xml"></include>
-
+	<include file="org/sourcelesslight/interceptors/struts.interceptors.xml"></include>
+	
+	
 	<package name="friendfinder" namespace="/FriendFinder" extends="struts-default">
 		<action name="list" class="org.sourcelesslight.actions.FriendFinderAction">
 			<result name="success">/Pages/User/friendfinder.jsp</result>
@@ -53,11 +54,17 @@
 		
 	</package>
 	
+	<package name="default" namespace="/" extends="customInterceptors">
+		<action name="welcome">
+			<interceptor-ref name="homeStack"/>
+			<result>Pages/Anonymous/home.jsp</result>
+		</action>
+	</package>
+	
 	<package name="settings" namespace="/ControlPanel" extends="customInterceptors">
  
 		   <action name="settings" class="org.sourcelesslight.actions.SettingsAction">
-		   	<interceptor-ref name="customStack01"/>
-		   	
+		   	<interceptor-ref name="userLevelSecurity"/>
 			<result name="success">/Pages/User/settings.jsp</result>
 		   </action>
 		 
@@ -69,12 +76,5 @@
 		   </action>
 		   
   	</package>
-
-	<package name="default" namespace="/" extends="customInterceptors">
-		<action name="welcome">
-			<interceptor-ref name="customStack01"/>
-			<result>/index.jsp</result>
-		</action>
-	</package>
 	
 </struts>
