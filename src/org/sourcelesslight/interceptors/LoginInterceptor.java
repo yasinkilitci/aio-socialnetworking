@@ -1,15 +1,13 @@
 package org.sourcelesslight.interceptors;
 
-import java.util.Map;
 
-import javax.servlet.http.Cookie;
+
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.interceptor.CookiesAware;
 import org.sourcelesslight.actions.LoginAction;
 import org.sourcelesslight.actions.interfaces.LoginRequired;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
@@ -30,10 +28,10 @@ public class LoginInterceptor extends AbstractInterceptor {
 		public String intercept(ActionInvocation invocation) throws Exception {
 			
 			// get the session information
-		     Map<String, Object> session = ActionContext.getContext().getSession();
+		     HttpSession session = ServletActionContext.getRequest().getSession();
 		     
 			// if the user is already signed-in, then let the request through.
-			if(session.get("id")!=null)
+			if(session.getAttribute("id")!=null)
 			{
 				return invocation.invoke();
 			}
@@ -44,24 +42,12 @@ public class LoginInterceptor extends AbstractInterceptor {
 		            return invocation.invoke();
 		        }
 	 
-			 
-			 
 			 // if the action is loginAction let it through
 	        if (action instanceof LoginAction)
 	            return invocation.invoke();
-	        else 
-	        {
-	        	Cookie[] cookies = ServletActionContext.getRequest().getCookies();
-			    if(cookies!=null) 
-	        	for(int i=0;i<cookies.length;i++)
-			    	 if (cookies[i].getName()=="cookie_id")
-					    {
-					     session.put("id", cookies[i].getValue());
-					     return invocation.invoke();
-					    }
-			  // checkthecookies "id" cookie not found redirect the user to homepage
+	        else
 	        	return "loginRedirect";
-	        }
+	        
 		}
 
 		//called during interceptor destruction
