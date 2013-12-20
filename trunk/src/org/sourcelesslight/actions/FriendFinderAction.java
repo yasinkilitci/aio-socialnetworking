@@ -1,7 +1,6 @@
 package org.sourcelesslight.actions;
 
 import java.util.List;
-import java.util.Map;
 
 import org.sourcelesslight.actions.interfaces.LoginRequired;
 import org.sourcelesslight.model.User;

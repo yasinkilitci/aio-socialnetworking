@@ -5,7 +5,7 @@
 
 <h1>Settings</h1>
  
-<s:form action="resultAction" namespace="/">
+<s:form id="formSettings" action="savePreferences" namespace="/ControlPanel">
  
 <h4>
 	<s:select label="Theme" 
@@ -26,9 +26,9 @@
  
  <script>
 
- $("#resultAction_submit").button();
+ $("#formSettings_submit").button();
 
- $("#resultAction").validate({
+ $("#formSettings").validate({
 	    rules: {
 	    	themeBox: { required: true }
 	    },
@@ -38,12 +38,12 @@
 	    }
 	});
 
- $("#resultAction").submit(function(e){
+ $("#formSettings").submit(function(e){
 	    return false;
 	});
 
- $("#resultAction_submit").click(function () {
-	    var isvalid = $("#resultAction").valid();
+ $("#formSettings_submit").click(function () {
+	    var isvalid = $("#formSettings").valid();
 	    if (isvalid)
 	    	sendSettingsViaAjax();
 	});

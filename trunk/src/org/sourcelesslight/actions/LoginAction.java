@@ -4,13 +4,16 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.struts2.interceptor.CookiesAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
+import org.sourcelesslight.actions.enums.HttpStatus;
 import org.sourcelesslight.model.User;
 import org.sourcelesslight.services.AuthenticationService;
 import org.spring.helpers.ApplicationContextProvider;
@@ -18,7 +21,7 @@ import org.springframework.context.support.AbstractApplicationContext;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-public class LoginAction extends ActionSupport implements ServletRequestAware, SessionAware,ServletResponseAware {
+public class LoginAction extends ActionSupport implements ServletRequestAware, SessionAware,ServletResponseAware,CookiesAware {
 
 	//This prevents serializing the class to file and deserialize as a different version of class.
 	private static final long serialVersionUID = 1000L;
@@ -26,62 +29,71 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
 	// Parameters
 	private String username;
 	private String password;
+	private boolean rememberMe;
 	// Parameters
 	
 	// Get an actual user record from database with current username and password parameters
 	private AuthenticationService authService;
 	
-	// Retrieve request and session objects, any changes made to these will be reflected to actual ones.
+	// Retrieve request,response,session, cookies objects, any changes made to these will be reflected to actual ones.
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private Map<String, Object> session;
+	private Map<String, String> cookies;
 	
 	public String execute()
 	{
-		String method = request.getMethod();
-		if(method == "POST")
+		try
 		{
-			if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password))
+			String method = request.getMethod();
+			if(method == "POST")
 			{
-				return "failure";
-			}
-			
-			AbstractApplicationContext context = ApplicationContextProvider.getApplicationContext();
-			authService = context.getBean("AuthenticationService",AuthenticationService.class);
-			User user = authService.performLogin(username, password);
-				if(user!=null)
+				if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password))
 				{
-					/* Successful Login */
-					Map<String, Object> parameters = this.getSession();
-					parameters.put("id", user.getUserId());
-					HttpServletResponse lresponse = this.getServletResponse();
-					lresponse.setStatus(200);
-					return SUCCESS;
+					return "failure";
 				}
-				else
-				{
-					/* Failed Login */
-					HttpServletResponse lresponse = this.getServletResponse();
-					try 
+				
+				AbstractApplicationContext context = ApplicationContextProvider.getApplicationContext();
+				authService = context.getBean("AuthenticationService",AuthenticationService.class);
+				User user = authService.performLogin(username, password);
+					if(user!=null)
 					{
-						lresponse.getWriter().write(context.getMessage("0001",null,null,Locale.US));
-					} 
-					catch (IOException e) 
-					{
-						e.printStackTrace();
+						/* Successful Login */
+						session.put("id", user.getUserId());
+						
+						//set cookies if rememberMe is "true"
+						if(rememberMe)
+						{
+							Cookie cookie_id = new Cookie("cookie_id",String.valueOf(user.getUserId()));
+							cookie_id.setMaxAge(60*60*24);
+							cookie_id.setDomain("magnepal.com");
+							cookie_id.setPath("/");
+							response.addCookie(cookie_id);
+						}
+						
+						
+						response.setStatus(HttpStatus.SUCCESSFUL.toInt());
+						return SUCCESS;
 					}
-					
-					lresponse.setStatus(403);
-					return null;
-				}
+					else
+					{
+						/* Failed Login */
+						response.getWriter().write(context.getMessage("0001",null,null,Locale.US));
+						response.setStatus(HttpStatus.FORBIDDEN.toInt());
+						return null;
+					}
+			}
+		
 		}
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+		
 		return SUCCESS;
 	}
 
-	@Override
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
-	}
+	
 	
 	@Override
 	public void setSession(Map<String, Object> session) {
@@ -108,6 +120,14 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
 		this.password = password;
 	}
 
+	public boolean isRememberMe() {
+		return rememberMe;
+	}
+
+	public void setRememberMe(boolean rememberMe) {
+		this.rememberMe = rememberMe;
+	}
+
 	@Override
 	public void setServletResponse(HttpServletResponse response) {
 		this.response = response;
@@ -117,4 +137,19 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
 	{
 		return this.response;
 	}
+	
+	@Override
+	public void setServletRequest(HttpServletRequest request) {
+		this.request = request;
+	}
+
+	@Override
+	public void setCookiesMap(Map<String, String> cookies) {
+		this.cookies = cookies;
+	}
+
+	public Map<String, String> getCookiesMap() {
+		return cookies;
+	}
+	
 }

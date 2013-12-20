@@ -3,9 +3,10 @@
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Styles/Validation.css"></link>
 
-<s:form id="frmLogin" action="Authentication/login">
+<s:form id="frmLogin" action="login" namespace="/Authentication">
 	<s:textfield id="txtUsername" label="Username" key="username"/>
 	<s:password id="txtPassword" label="Password" key="password"/>
+	<s:checkbox id="optRememberMe" label="Remember Me" key="rememberMe"/>
 	<s:submit id="btnLogin" align="left" value="Login Now" />
 </s:form>
 
@@ -39,7 +40,8 @@ function sendCreateFormViaAjax() {
     var formData =
         {
             username: $("#txtUsername").val(),
-            password: $("#txtPassword").val()
+            password: $("#txtPassword").val(),
+            rememberMe : $('#optRememberMe').is(':checked')
         };
     
         $.ajax({

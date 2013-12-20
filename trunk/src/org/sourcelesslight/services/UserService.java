@@ -49,7 +49,7 @@ public class UserService {
 			session.save(preferences);
 			user.setPreferences(preferences);
 			user.setPassword(hasher.encrypt(user.getPassword()));
-			session.update(user);
+			session.persist(user);
 			tx.commit();
 			session.close();
 		}
@@ -98,15 +98,17 @@ public class UserService {
 		}
 	}
 	
+
 	@Transactional(readOnly=true)
 	public List<User> getAllUsers()
 	{
 		Session session = sessionFactory.openSession();
 		try
 		{
-			List<User> users = (List<User>)session.createQuery("From USERS WHERE AUTHLEVEL=:authtype")
+			List<User> users = (List<User>)session.createQuery("From User where authLevel=:authtype")
 					.setInteger("authtype", AuthType.USER.toInt())
 					.list();
+			
 			session.close();
 			return users;
 		}

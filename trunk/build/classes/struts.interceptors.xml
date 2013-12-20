@@ -14,6 +14,17 @@
 			<interceptor-stack name="customStack01">
 				<interceptor-ref name="loginInterceptor"/>
 				<interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="cookie">
+		   			<param name="cookiesName">cookie_id</param>
+		   			<param name="cookiesValue"></param>
+		   		</interceptor-ref>
+		   		<interceptor-ref name="cookieProvider"/>
+			</interceptor-stack>
+			
+			<interceptor-stack name="userLevelSecurityStack">
+				<interceptor-ref name="loginInterceptor"/>
+				<interceptor-ref name="cookie"/>
+				<interceptor-ref name="basicStack"/>
 			</interceptor-stack>
 			
 		</interceptors>

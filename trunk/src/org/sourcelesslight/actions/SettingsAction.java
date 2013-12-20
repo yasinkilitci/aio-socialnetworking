@@ -49,13 +49,6 @@ public class SettingsAction extends ActionSupport implements LoginRequired,Sessi
 		this.themes = themes;
 	}
 	
-	public String populate()
-	{
-		preferencesService = context.getBean("PreferencesService",PreferencesService.class);
-		themes = preferencesService.getAllThemes();
-		return "populate";
-	}
-
 	public Map<String, Object> getSession() {
 		return this.session;
 	}
