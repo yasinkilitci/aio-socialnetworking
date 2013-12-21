@@ -99,6 +99,7 @@ public class UserService {
 	}
 	
 
+	@SuppressWarnings("unchecked")
 	@Transactional(readOnly=true)
 	public List<User> getAllUsers()
 	{

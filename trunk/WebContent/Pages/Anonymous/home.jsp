@@ -20,7 +20,7 @@
 	</div>
 	
 	<div class="menu-wrapper">
-		<jsp:include page="../Partial/menu.jsp"/>
+		
 	</div>
 	
 	<div class="content-wrapper">

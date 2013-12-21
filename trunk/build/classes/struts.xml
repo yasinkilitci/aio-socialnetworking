@@ -61,6 +61,13 @@
 		</action>
 	</package>
 	
+	<package name="" namespace="/" extends="customInterceptors">
+		<action name="menu" class="org.sourcelesslight.actions.MenuProviderAction">
+			<interceptor-ref name="homeStack"/>
+			<result name="success">/Pages/Partial/menu.jsp</result>
+		</action>
+	</package>
+	
 	<package name="settings" namespace="/ControlPanel" extends="customInterceptors">
  
 		   <action name="settings" class="org.sourcelesslight.actions.SettingsAction">

@@ -19,7 +19,6 @@ import org.sourcelesslight.services.AuthenticationService;
 import org.spring.helpers.ApplicationContextProvider;
 import org.springframework.context.support.AbstractApplicationContext;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class LoginAction extends ActionSupport implements ServletRequestAware, SessionAware,ServletResponseAware,CookiesAware {
@@ -49,13 +48,17 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
 			String method = request.getMethod();
 			if(method == "POST")
 			{
+				AbstractApplicationContext context = ApplicationContextProvider.getApplicationContext();
+				
+				
 				if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password))
 				{
-					return "failure";
+					response.getWriter().write(context.getMessage("0001",null,null,Locale.US));
+					response.setStatus(HttpStatus.FORBIDDEN.toInt());
+					return null;
 				}
 				
 				//request.getRemoteAddr();
-				AbstractApplicationContext context = ApplicationContextProvider.getApplicationContext();
 				authService = context.getBean("AuthenticationService",AuthenticationService.class);
 				User user = authService.performLogin(username, password);
 					if(user!=null)
