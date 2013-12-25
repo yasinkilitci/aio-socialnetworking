@@ -40,7 +40,7 @@
 				$("body").css("background","rgba(0,128,255,1)");
 				$("div.menu-wrapper").draggable();
 				$("div.menu-wrapper,div.content-wrapper,div.copyright-wrapper").css("background","rgba(255,150,0,1)");
-				$(".content-wrapper").load("./Pages/Anonymous/Authentication/login.jsp");
+				$("div.content-wrapper").load("./Pages/Anonymous/Authentication/login.jsp");
 			});
 		</script>
 		<li><a href="#" id="lnkAbout">About</a></li>
