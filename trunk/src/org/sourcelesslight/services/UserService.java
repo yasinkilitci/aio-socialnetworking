@@ -49,7 +49,7 @@ public class UserService {
 			session.save(preferences);
 			user.setPreferences(preferences);
 			user.setPassword(hasher.encrypt(user.getPassword()));
-			session.persist(user);
+			session.saveOrUpdate(user);
 			tx.commit();
 			session.close();
 		}

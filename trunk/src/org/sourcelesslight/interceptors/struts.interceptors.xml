@@ -17,9 +17,9 @@
 			class="org.sourcelesslight.interceptors.CookieToSessionInterceptor"/>
 			
 			<interceptor-stack name="customStack01">
+				<interceptor-ref name="defaultStack"/>
 				<interceptor-ref name="cookieToSessionInterceptor"/>
 				<interceptor-ref name="loginInterceptor"/>
-				<interceptor-ref name="basicStack"/>
 			</interceptor-stack>
 			
 			<interceptor-stack name="homeStack">

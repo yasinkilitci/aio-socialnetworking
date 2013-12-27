@@ -14,10 +14,10 @@
 		<!-- Hibernate - Database Configuration -->
 		
 		<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-				 <property name="driverClassName" value="org.postgresql.Driver"/>
- 				 <property name="url" value="jdbc:postgresql://${db_ip}:${db_port}/${db_name}"/>
- 				 <property name="username" value="${db_username}" />
-        		<property name="password" value="${db_password}" />
+			 	<property name="driverClassName" value="org.postgresql.Driver"/>
+			 	<property name="url" value="jdbc:postgresql://${db_ip}:${db_port}/${db_name}?sslfactory=org.postgresql.ssl.NonValidatingFactory&amp;ssl=${db_ssl}"/>
+			 	<property name="username" value="${db_username}" />
+				<property name="password" value="${db_password}" />
 		</bean>
 		
 		<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">

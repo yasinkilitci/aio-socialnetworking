@@ -4,7 +4,7 @@
      
      <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Styles/Validation.css"></link>
      
-<s:form action="Registration/Signup" id="frmSignup">
+<s:form action="signup" namespace="/Registration" id="frmSignup">
 	<s:textfield label="Username" key="username"/>
 	<s:password label="Password" key="password"/>
 	<s:password label="Password(Repeat)" key="password2"/>
