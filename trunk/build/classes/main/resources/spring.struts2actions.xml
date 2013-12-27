@@ -1,0 +1,49 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+		
+		<!-- STRUTS2 ACTION CLASSES -->
+		
+		<bean id="friendFinderAction" class="org.sourcelesslight.actions.FriendFinderAction">
+			<property name="userService" ref="UserService"/>
+		</bean>
+		
+		<bean id="loginAction" class="org.sourcelesslight.actions.LoginAction">
+			<property name="messageSource" ref="messageSource"/>
+			<property name="authenticationService" ref="AuthenticationService"/>
+		</bean>
+		
+		<bean id="logoutActionAction" class="org.sourcelesslight.actions.LogoutAction"/>
+		
+		<bean id="menuProviderAction" class="org.sourcelesslight.actions.MenuProviderAction">
+			<property name="userService" ref="UserService"/>
+		</bean>
+		
+		<bean id="saveSettingsAction" class="org.sourcelesslight.actions.SaveSettingsAction">
+			<property name="messageSource" ref="messageSource"/>
+			<property name="userService" ref="UserService"/>
+			<property name="preferencesService" ref="PreferencesService"/>
+		</bean>
+		
+		<bean id="sendRequestAction" class="org.sourcelesslight.actions.SendRequestAction">
+			<property name="messageSource" ref="messageSource"/>
+		</bean>
+		
+		<bean id="settingsAction" class="org.sourcelesslight.actions.SettingsAction">
+			<property name="preferencesService" ref="PreferencesService"/>
+		</bean>
+		
+		<bean id="signupAction" class="org.sourcelesslight.actions.SignupAction">
+			<property name="messageSource" ref="messageSource"/>
+			<property name="userService" ref="UserService"/>
+			<property name="preferencesService" ref="PreferencesService"/>
+		</bean>
+		
+</beans>

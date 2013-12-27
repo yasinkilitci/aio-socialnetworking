@@ -5,26 +5,24 @@ import java.util.Map;
 import org.apache.struts2.interceptor.SessionAware;
 import org.sourcelesslight.model.User;
 import org.sourcelesslight.services.UserService;
-import org.spring.helpers.ApplicationContextProvider;
-import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+@Controller
 public class MenuProviderAction extends ActionSupport implements SessionAware {
 
 	private static final long serialVersionUID = 4516184325584748750L;
 	private User user = new User();
 	private Map<String, Object> session; 
+	private UserService userService;
 	
 	public String execute()
 	{
-		AbstractApplicationContext context = ApplicationContextProvider.getApplicationContext();
-		UserService us;
 		Object sessionId = session.get("id");
 		if(sessionId!=null)
 		{
-			us = context.getBean("UserService",UserService.class);
-			user = us.getUserById(Integer.parseInt(sessionId.toString()));
+			user = userService.getUserById(Integer.parseInt(sessionId.toString()));
 		}
 		return SUCCESS;
 	}
@@ -40,6 +38,14 @@ public class MenuProviderAction extends ActionSupport implements SessionAware {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 
 	

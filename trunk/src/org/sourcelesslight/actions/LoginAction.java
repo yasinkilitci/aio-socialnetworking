@@ -16,24 +16,28 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.sourcelesslight.actions.enums.HttpStatus;
 import org.sourcelesslight.model.User;
 import org.sourcelesslight.services.AuthenticationService;
-import org.spring.helpers.ApplicationContextProvider;
-import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+@Controller
 public class LoginAction extends ActionSupport implements ServletRequestAware, SessionAware,ServletResponseAware,CookiesAware {
 
 	//This prevents serializing the class to file and deserialize as a different version of class.
 	private static final long serialVersionUID = 1000L;
+	
+	//Dependencies
+	// Get an actual user record from database with current username and password parameters
+	private AuthenticationService authenticationService;
+	private MessageSource messageSource;
+	//Dependencies
 	
 	// Parameters
 	private String username;
 	private String password;
 	private boolean rememberMe;
 	// Parameters
-	
-	// Get an actual user record from database with current username and password parameters
-	private AuthenticationService authService;
 	
 	// Retrieve request,response,session, cookies objects, any changes made to these will be reflected to actual ones.
 	private HttpServletRequest request;
@@ -48,19 +52,16 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
 			String method = request.getMethod();
 			if(method == "POST")
 			{
-				AbstractApplicationContext context = ApplicationContextProvider.getApplicationContext();
-				
 				
 				if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password))
 				{
-					response.getWriter().write(context.getMessage("0001",null,null,Locale.US));
+					response.getWriter().write(messageSource.getMessage("0001",null,null,Locale.US));
 					response.setStatus(HttpStatus.FORBIDDEN.toInt());
 					return null;
 				}
 				
 				//request.getRemoteAddr();
-				authService = context.getBean("AuthenticationService",AuthenticationService.class);
-				User user = authService.performLogin(username, password);
+				User user = authenticationService.performLogin(username, password);
 					if(user!=null)
 					{
 						/* Successful Login */
@@ -82,7 +83,7 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
 					else
 					{
 						/* Failed Login */
-						response.getWriter().write(context.getMessage("0001",null,null,Locale.US));
+						response.getWriter().write(messageSource.getMessage("0001",null,null,Locale.US));
 						response.setStatus(HttpStatus.FORBIDDEN.toInt());
 						return null;
 					}
@@ -155,5 +156,31 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
 	public Map<String, String> getCookiesMap() {
 		return cookies;
 	}
+
+	
+	
+	public AuthenticationService getAuthenticationService() {
+		return authenticationService;
+	}
+
+
+
+	public void setAuthenticationService(AuthenticationService authenticationService) {
+		this.authenticationService = authenticationService;
+	}
+
+
+
+	public MessageSource getMessageSource() {
+		return messageSource;
+	}
+
+
+
+	public void setMessageSource(MessageSource messageSource) {
+		this.messageSource = messageSource;
+	}
+	
+	
 	
 }

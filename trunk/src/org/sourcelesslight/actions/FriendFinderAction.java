@@ -5,23 +5,17 @@ import java.util.List;
 import org.sourcelesslight.actions.interfaces.LoginRequired;
 import org.sourcelesslight.model.User;
 import org.sourcelesslight.services.UserService;
-import org.spring.helpers.ApplicationContextProvider;
-import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+@Controller
 public class FriendFinderAction extends ActionSupport implements LoginRequired {
 
 	private static final long serialVersionUID = 7089836153796088129L;
 	
 	private List<User> friendList;
-	private AbstractApplicationContext context = ApplicationContextProvider.getApplicationContext();
 	private UserService userService;
-	
-	public FriendFinderAction()
-	{
-		userService = context.getBean("UserService",UserService.class);
-	}
 	
 	public String execute()
 	{
@@ -36,7 +30,13 @@ public class FriendFinderAction extends ActionSupport implements LoginRequired {
 	public void setFriendList(List<User> friendList) {
 		this.friendList = friendList;
 	}
-	
-	
+
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 
 }
