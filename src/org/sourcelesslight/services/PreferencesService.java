@@ -42,7 +42,7 @@ public class PreferencesService {
 		{
 			Session session = sessionFactory.openSession();
 			ArrayList<Theme> themes = (ArrayList<Theme>) session
-					.createCriteria(Theme.class)
+					.createQuery("from Theme")
 					.setCacheable(true)
 					.list();
 			session.close();

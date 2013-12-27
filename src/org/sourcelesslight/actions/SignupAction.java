@@ -40,25 +40,27 @@ public class SignupAction extends ActionSupport implements ModelDriven<User>,Ser
 		{
 			AbstractApplicationContext context = ApplicationContextProvider.getApplicationContext();
 			
-			if(StringUtils.isEmpty(user.getFirstname()))
+			if(		StringUtils.isEmpty(user.getFirstname())||
+					StringUtils.isEmpty(user.getUsername())||
+					StringUtils.isEmpty(user.getPassword())
+					)
 			{
-				response.getWriter().write(context.getMessage("0002",null,"Signup Error",Locale.US));
+				response.getWriter().write(context.getMessage("0002",null,null,Locale.US));
 				response.setStatus(HttpStatus.FORBIDDEN.toInt());
 				return null;
 			}
+			
 			userService = context.getBean("UserService",UserService.class);
 			preferencesService = context.getBean("PreferencesService",PreferencesService.class);
-			
 			Theme theme = preferencesService.getThemeById(1);
 			Preferences preferences = new Preferences();
 			preferences.setTheme(theme);
-			
 			user.setRegDate(new Date());
 			user.setAuthLevel(AuthType.USER);
 			userService.savePreferencesWithUser(user, preferences);
 			
 			response.setStatus(HttpStatus.SUCCESSFUL.toInt());
-			response.getWriter().write(context.getMessage("0003",null,"Congratulations!",Locale.US));
+			response.getWriter().write(context.getMessage("0003",null,null,Locale.US));
 		}
 		catch (IOException e)
 		{
