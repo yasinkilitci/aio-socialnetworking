@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.sourcelesslight.hashing.SHA256Hasher;
+import org.sourcelesslight.model.ConfirmationCode;
 import org.sourcelesslight.model.Preferences;
 import org.sourcelesslight.model.User;
 import org.sourcelesslight.model.enums.AuthType;
@@ -40,13 +41,15 @@ public class UserService {
 	}
 	
 	@Transactional(readOnly=false)
-	public void savePreferencesWithUser(User user,Preferences preferences)
+	public void savePreferencesWithUser(User user,Preferences preferences, ConfirmationCode cc)
 	{
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		try
 		{
 			session.save(preferences);
+			session.save(cc);
+			user.setConfirmationCode(cc);
 			user.setPreferences(preferences);
 			user.setPassword(hasher.encrypt(user.getPassword()));
 			session.saveOrUpdate(user);
@@ -55,7 +58,8 @@ public class UserService {
 		}
 		catch(HibernateException e)
 		{
-		
+			tx.rollback();
+			session.close();
 			throw e;
 		}
 	}

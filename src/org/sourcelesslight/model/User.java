@@ -20,6 +20,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.sourcelesslight.model.enums.AccountState;
 import org.sourcelesslight.model.enums.AuthType;
 import org.springframework.cache.annotation.Cacheable;
 
@@ -60,10 +61,18 @@ public class User {
 	@Enumerated(EnumType.ORDINAL)
 	private AuthType authLevel;
 	
+	@Column(name="ACCSTATE")
+	@Enumerated(EnumType.ORDINAL)
+	private AccountState accState;
+	
 	// Lazy initialize this until we manually initialize them
 	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="ID_PREFERENCES")
 	private Preferences preferences;
+	
+	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	@JoinColumn(name="ID_CONFIRMATIONCODES")
+	private ConfirmationCode confirmationCode;
 	
 	// Setters & Getters
 	
@@ -103,9 +112,11 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
 	public Date getRegDate() {
 		return regDate;
 	}
+	
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
@@ -113,15 +124,33 @@ public class User {
 	public AuthType getAuthLevel() {
 		return authLevel;
 	}
+	
 	public void setAuthLevel(AuthType authLevel) {
 		this.authLevel = authLevel;
 	}
+	
 	public Preferences getPreferences() {
 		return preferences;
 	}
+	
 	public void setPreferences(Preferences preferences) {
 		this.preferences = preferences;
 	}
+	
+	public AccountState getAccState() {
+		return accState;
+	}
+	
+	public void setAccState(AccountState accState) {
+		this.accState = accState;
+	}
+	public ConfirmationCode getConfirmationCode() {
+		return confirmationCode;
+	}
+	public void setConfirmationCode(ConfirmationCode confirmationCode) {
+		this.confirmationCode = confirmationCode;
+	}
+	
 	
 	
 }

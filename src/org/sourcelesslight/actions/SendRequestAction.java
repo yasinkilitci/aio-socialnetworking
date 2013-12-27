@@ -15,18 +15,18 @@ import org.sourcelesslight.actions.interfaces.LoginRequired;
 import org.sourcelesslight.model.User;
 import org.sourcelesslight.services.FriendRequestService;
 import org.sourcelesslight.services.UserService;
-import org.spring.helpers.ApplicationContextProvider;
-import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-
+@Controller
 public class SendRequestAction extends ActionSupport implements SessionAware, ServletResponseAware, LoginRequired {
 
 	private static final long serialVersionUID = 3158587621861280485L;
 	
 	private HttpServletResponse response;
-	private AbstractApplicationContext context = ApplicationContextProvider.getApplicationContext();
+	private MessageSource messageSource;
 	private Map<String, Object> session;
 	private UserService userService;
 	private FriendRequestService friendRequestService;
@@ -34,8 +34,7 @@ public class SendRequestAction extends ActionSupport implements SessionAware, Se
 	
 	public SendRequestAction()
 	{
-		userService = context.getBean("UserService",UserService.class);
-		friendRequestService = context.getBean("FriendRequestService",FriendRequestService.class);
+		
 	}
 	
 	public String execute()
@@ -52,7 +51,7 @@ public class SendRequestAction extends ActionSupport implements SessionAware, Se
 			}
 			else
 			{
-				response.getWriter().write(context.getMessage("0002",null,"Failed!", Locale.US));
+				response.getWriter().write(messageSource.getMessage("0002",null,"Failed!", Locale.US));
 			}
 			
 		}
@@ -115,6 +114,14 @@ public class SendRequestAction extends ActionSupport implements SessionAware, Se
 	public HttpServletResponse getServletResponse()
 	{
 		return response;
+	}
+
+	public MessageSource getMessageSource() {
+		return messageSource;
+	}
+
+	public void setMessageSource(MessageSource messageSource) {
+		this.messageSource = messageSource;
 	}
 	
 	

@@ -5,13 +5,13 @@ import java.util.Locale;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
-import org.spring.helpers.ApplicationContextProvider;
-import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.MessageSource;
 
 @Aspect
 public class LoggingAspect {
 	
-	private AbstractApplicationContext context;
+	//Injected by Spring
+	private MessageSource messageSource;
 
 	/* run this method each time after the execution of public anyreturntype from this full path: 
 	 * org.sourcelesslight.services.AuthenticationService.performLogin(any parameter)
@@ -22,7 +22,16 @@ public class LoggingAspect {
 		Object args[] = joinpoint.getArgs();
 		String username = (String)args[0];
 		String password = (String)args[1];
-		context = ApplicationContextProvider.getApplicationContext();
-		System.err.println(context.getMessage("L001",new Object[]{username,password},"Default",Locale.US));
+		System.err.println(messageSource.getMessage("L001",new Object[]{username,password},"Default",Locale.US));
 	}
+
+	public MessageSource getMessageSource() {
+		return messageSource;
+	}
+
+	public void setMessageSource(MessageSource messageSource) {
+		this.messageSource = messageSource;
+	}
+	
+	
 }

@@ -16,29 +16,23 @@ import org.sourcelesslight.model.Theme;
 import org.sourcelesslight.model.User;
 import org.sourcelesslight.services.PreferencesService;
 import org.sourcelesslight.services.UserService;
-import org.spring.helpers.ApplicationContextProvider;
-import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
+@Controller
 public class SaveSettingsAction extends ActionSupport implements ModelDriven<Theme>,LoginRequired,SessionAware,ServletResponseAware  {
 
 	//This prevents serializing the class to file and deserialize as a different version of class.
 	private static final long serialVersionUID = -5384546532697107457L;
-	
-	private AbstractApplicationContext context = ApplicationContextProvider.getApplicationContext();
+	private MessageSource messageSource;
 	private PreferencesService preferencesService;
 	private UserService userService;
 	private HttpServletResponse response;
 	private Map<String,Object> session;
 	private Theme theme = new Theme();
-	
-	public SaveSettingsAction(){
-		preferencesService = context.getBean("PreferencesService",PreferencesService.class);
-		userService = context.getBean("UserService",UserService.class);
-	}
-	
 	
 	public String execute()
 	{
@@ -51,7 +45,7 @@ public class SaveSettingsAction extends ActionSupport implements ModelDriven<The
 		pr.setTheme(this.getModel());
 		preferencesService.updatePreferences(pr);
 		response.setStatus(HttpStatus.SUCCESSFUL.toInt());
-		response.getWriter().write(context.getMessage("0005",null,"Successfully Saved!", Locale.US));
+		response.getWriter().write(messageSource.getMessage("0005",null,"Successfully Saved!", Locale.US));
 		return null;
 		}
 		catch(HibernateException h)
@@ -59,7 +53,7 @@ public class SaveSettingsAction extends ActionSupport implements ModelDriven<The
 			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.toInt());
 			try
 			{
-				response.getWriter().write(context.getMessage("0004",null,"Error Saving Preferences!", Locale.US));
+				response.getWriter().write(messageSource.getMessage("0004",null,"Error Saving Preferences!", Locale.US));
 			}
 			catch(IOException ioe)
 			{
@@ -103,5 +97,31 @@ public class SaveSettingsAction extends ActionSupport implements ModelDriven<The
 	public HttpServletResponse getServletResponse(){
 		return this.response;
 	}
+
+	public MessageSource getMessageSource() {
+		return messageSource;
+	}
+
+	public void setMessageSource(MessageSource messageSource) {
+		this.messageSource = messageSource;
+	}
+
+	public PreferencesService getPreferencesService() {
+		return preferencesService;
+	}
+
+	public void setPreferencesService(PreferencesService preferencesService) {
+		this.preferencesService = preferencesService;
+	}
+
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+	
+	
 	
 }

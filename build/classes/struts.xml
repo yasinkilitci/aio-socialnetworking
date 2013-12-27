@@ -11,7 +11,7 @@
 	
 	
 	<package name="friendfinder" namespace="/FriendFinder" extends="struts-default">
-		<action name="list" class="org.sourcelesslight.actions.FriendFinderAction">
+		<action name="list" class="friendFinderAction">
 			<result name="success">/Pages/User/friendfinder.jsp</result>
 			<result name="failure" type="redirectAction">
 			 	<param name="actionName">welcome</param>
@@ -22,7 +22,7 @@
 	
 	<package name="authentication" namespace="/Authentication" extends="customInterceptors">
 
-		<action name="login" class="org.sourcelesslight.actions.LoginAction">
+		<action name="login" class="loginAction">
 			<interceptor-ref name="customStack01"/>
 			<result name="success" type="redirectAction">
 			 	<param name="actionName">welcome</param>
@@ -31,7 +31,7 @@
 			<result name="error">/Pages/Anonymous/Authentication/failure.jsp</result>
 		</action>
 		
-		<action name="logout" class="org.sourcelesslight.actions.LogoutAction">
+		<action name="logout" class="logoutAction">
 			<interceptor-ref name="customStack01"/>
 			<result name="success" type="redirectAction">
 			 	<param name="actionName">welcome</param>
@@ -44,7 +44,7 @@
 	
 	<package name="registration" namespace="/Registration" extends="customInterceptors">
 
-		<action name="signup" class="org.sourcelesslight.actions.SignupAction">
+		<action name="signup" class="signupAction">
 			<interceptor-ref name="customStack01"/>
 			<result name="success" type="redirectAction">
 			 	<param name="actionName">welcome</param>
@@ -62,7 +62,7 @@
 	</package>
 	
 	<package name="" namespace="/" extends="customInterceptors">
-		<action name="menu" class="org.sourcelesslight.actions.MenuProviderAction">
+		<action name="menu" class="menuProviderAction">
 			<interceptor-ref name="homeStack"/>
 			<result name="success">/Pages/Partial/menu.jsp</result>
 		</action>
@@ -70,12 +70,12 @@
 	
 	<package name="settings" namespace="/ControlPanel" extends="customInterceptors">
  
-		   <action name="settings" class="org.sourcelesslight.actions.SettingsAction">
+		   <action name="settings" class="settingsAction">
 		   	<interceptor-ref name="userLevelSecurity"/>
 			<result name="success">/Pages/User/settings.jsp</result>
 		   </action>
 		 
-		   <action name="savePreferences" class="org.sourcelesslight.actions.SaveSettingsAction">
+		   <action name="savePreferences" class="saveSettingsAction">
 				<result name="success" type="redirectAction">
 				 	<param name="actionName">welcome</param>
 	            	<param name="namespace">/</param>

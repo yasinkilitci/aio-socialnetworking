@@ -5,12 +5,15 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+@Controller
 public class LogoutAction extends ActionSupport implements SessionAware,ServletRequestAware,ServletResponseAware {
 
 	//This prevents serializing the class to file and deserialize as a different version of class.
