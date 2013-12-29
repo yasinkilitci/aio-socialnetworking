@@ -1,0 +1,22 @@
+db_name=socialdb
+db_port=5432
+db_username=postgres
+db_password=Xbox%360
+db_ip=localhost
+
+?sslfactory=org.postgresql.ssl.NonValidatingFactory&amp;
+
+db_name=d6hp9712tg1lep
+db_port=5432
+db_username=vlmgjnhuakdbut
+db_password=wjGc_zijmGQqpxHasJSvlwl-Y9
+db_ip=ec2-54-197-237-171.compute-1.amazonaws.com
+
+
+
+<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+				 <property name="driverClassName" value="org.postgresql.Driver"/>
+ 				 <property name="url" value="jdbc:postgresql://${db_ip}:${db_port}/${db_name}?sslfactory=org.postgresql.ssl.NonValidatingFactory&amp;ssl=${db_ssl}"/>
+ 				 <property name="username" value="${db_username}" />
+        		<property name="password" value="${db_password}" />
+		</bean>

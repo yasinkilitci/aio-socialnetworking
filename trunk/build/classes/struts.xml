@@ -32,12 +32,11 @@
 		</action>
 		
 		<action name="logout" class="logoutAction">
-			<interceptor-ref name="customStack01"/>
+			<interceptor-ref name="userLevelSecurity"/>
 			<result name="success" type="redirectAction">
 			 	<param name="actionName">welcome</param>
             	<param name="namespace">/</param>
 			</result>
-			<result name="error">/Pages/Anonymous/Authentication/failure.jsp</result>
 		</action>
 	
 	</package>

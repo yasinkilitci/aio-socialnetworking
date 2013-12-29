@@ -5,7 +5,6 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -25,7 +24,6 @@ public class LogoutAction extends ActionSupport implements SessionAware,ServletR
 	public String execute()
 	{
 		session.remove("id");
-		
 		for(Cookie c : request.getCookies()) {
 		      if (c.getName().equals("MPUSERID"))
 		      {
