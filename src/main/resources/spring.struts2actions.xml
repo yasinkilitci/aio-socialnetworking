@@ -11,36 +11,36 @@
 		
 		<!-- STRUTS2 ACTION CLASSES -->
 		
-		<bean id="friendFinderAction" class="org.sourcelesslight.actions.FriendFinderAction">
+		<bean id="friendFinderAction" class="org.sourcelesslight.actions.FriendFinderAction" scope="prototype">
 			<property name="userService" ref="UserService"/>
 		</bean>
 		
-		<bean id="loginAction" class="org.sourcelesslight.actions.LoginAction">
+		<bean id="loginAction" class="org.sourcelesslight.actions.LoginAction" scope="prototype">
 			<property name="messageSource" ref="messageSource"/>
 			<property name="authenticationService" ref="AuthenticationService"/>
 		</bean>
 		
-		<bean id="logoutActionAction" class="org.sourcelesslight.actions.LogoutAction"/>
+		<bean id="logoutActionAction" class="org.sourcelesslight.actions.LogoutAction" scope="prototype"/>
 		
-		<bean id="menuProviderAction" class="org.sourcelesslight.actions.MenuProviderAction">
+		<bean id="menuProviderAction" class="org.sourcelesslight.actions.MenuProviderAction" scope="prototype">
 			<property name="userService" ref="UserService"/>
 		</bean>
 		
-		<bean id="saveSettingsAction" class="org.sourcelesslight.actions.SaveSettingsAction">
+		<bean id="saveSettingsAction" class="org.sourcelesslight.actions.SaveSettingsAction" scope="prototype">
 			<property name="messageSource" ref="messageSource"/>
 			<property name="userService" ref="UserService"/>
 			<property name="preferencesService" ref="PreferencesService"/>
 		</bean>
 		
-		<bean id="sendRequestAction" class="org.sourcelesslight.actions.SendRequestAction">
+		<bean id="sendRequestAction" class="org.sourcelesslight.actions.SendRequestAction" scope="prototype">
 			<property name="messageSource" ref="messageSource"/>
 		</bean>
 		
-		<bean id="settingsAction" class="org.sourcelesslight.actions.SettingsAction">
+		<bean id="settingsAction" class="org.sourcelesslight.actions.SettingsAction" scope="prototype">
 			<property name="preferencesService" ref="PreferencesService"/>
 		</bean>
 		
-		<bean id="signupAction" class="org.sourcelesslight.actions.SignupAction">
+		<bean id="signupAction" class="org.sourcelesslight.actions.SignupAction" scope="prototype">
 			<property name="messageSource" ref="messageSource"/>
 			<property name="userService" ref="UserService"/>
 			<property name="preferencesService" ref="PreferencesService"/>
