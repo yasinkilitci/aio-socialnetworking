@@ -20,11 +20,16 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 import org.sourcelesslight.model.enums.AccountState;
 import org.sourcelesslight.model.enums.AuthType;
 import org.springframework.cache.annotation.Cacheable;
 
-
+@Indexed
 @Entity(name="USERS")
 @Table(name="USERS")
 @Cacheable(value =  "Entity_User")
@@ -38,18 +43,23 @@ public class User {
 	@Column(name="ID_USERS")
 	private int userId;
 	
+	// Field is for Hibernate Search
+	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	@Column(name="USERNAME")
 	private String username;
 	
 	@Column(name="PASSWORD")
 	private String password;
 	
+	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	@Column(name="FNAME")
 	private String firstname;
 	
+	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	@Column(name="LNAME")
 	private String lastname;
 	
+	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	@Column(name="EMAIL")
 	private String email;
 	

@@ -7,6 +7,10 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.SearchFactory;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.sourcelesslight.hashing.SHA256Hasher;
 import org.sourcelesslight.model.ConfirmationCode;
 import org.sourcelesslight.model.Preferences;
@@ -102,6 +106,30 @@ public class UserService {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
+	public List<User> searchUser(String keyword)
+	{
+		Session session = sessionFactory.openSession();
+		FullTextSession fullTextSession = Search.getFullTextSession(session); 
+		
+		// Now we have two options: 
+				// 1. Hibernate DSL Query (Simpler)
+				// 2. Native Lucene Query (Complex)
+		
+		SearchFactory sf = fullTextSession.getSearchFactory();
+		final QueryBuilder qb = sf.buildQueryBuilder().forEntity(User.class).get();
+		
+		org.apache.lucene.search.Query luceneQuery =
+			    qb.keyword()
+			        .onField("username").boostedTo(3)
+			        .matching(keyword)
+			        .createQuery();
+		
+		org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery( luceneQuery );
+		
+		return (List<User>)fullTextQuery.list();
+	}
 
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly=true)
