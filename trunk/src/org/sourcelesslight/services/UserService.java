@@ -2,6 +2,7 @@ package org.sourcelesslight.services;
 
 import java.util.List;
 
+import org.hibernate.CacheMode;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -56,7 +57,7 @@ public class UserService {
 			user.setConfirmationCode(cc);
 			user.setPreferences(preferences);
 			user.setPassword(hasher.encrypt(user.getPassword()));
-			session.saveOrUpdate(user);
+			session.save(user);
 			tx.commit();
 			session.close();
 		}
@@ -203,6 +204,28 @@ public class UserService {
 		catch(HibernateException e)
 		{
 			throw e;
+		}
+	}
+	
+	public void refreshIndexes()
+	{
+		Session session = sessionFactory.openSession();
+		FullTextSession fullTextSession = Search.getFullTextSession(session); 
+		try 
+		{
+			fullTextSession
+			.createIndexer( User.class )
+			.batchSizeToLoadObjects( 25 )
+			.cacheMode( CacheMode.IGNORE )
+			.threadsToLoadObjects( 5 )
+			.idFetchSize( 150 )
+			.threadsForSubsequentFetching( 20 )
+			.startAndWait();
+			
+		
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

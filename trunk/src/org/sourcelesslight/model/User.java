@@ -51,11 +51,11 @@ public class User {
 	@Column(name="PASSWORD")
 	private String password;
 	
-	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
+	//@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	@Column(name="FNAME")
 	private String firstname;
 	
-	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
+	//@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	@Column(name="LNAME")
 	private String lastname;
 	
