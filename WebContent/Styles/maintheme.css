@@ -8,6 +8,14 @@ div.menu-wrapper,div.content-wrapper,div.copyright-wrapper
     font-family: Calibri;
 }
 
+.standard-textfield {
+    font: inherit;
+    color: inherit;
+    text-align: inherit;
+    outline: none;
+    cursor: text;
+}
+
 div.header-wrapper{
 	height: 72px;
 	width: 450px;
