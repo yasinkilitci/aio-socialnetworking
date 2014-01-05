@@ -7,11 +7,11 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.sourcelesslight.actions.enums.HttpStatus;
 import org.sourcelesslight.hashing.SHA256Hasher;
+import org.sourcelesslight.mailing.Postman;
 import org.sourcelesslight.model.ConfirmationCode;
 import org.sourcelesslight.model.Preferences;
 import org.sourcelesslight.model.Theme;
@@ -25,53 +25,71 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sun.mail.util.MailConnectException;
 
 @Controller
 public class SignupAction extends ActionSupport implements ModelDriven<User>,ServletRequestAware, ServletResponseAware {
 
 	//This prevents serializing the class to file and deserialize as a different version of class.
 	private static final long serialVersionUID = 1000L;
-	private MessageSource messageSource;
+	
+	
 	private HttpServletResponse response;
 	private HttpServletRequest request;
+	
+	//Injected Dependencies ( we did not use "new" keyword )
+	private MessageSource messageSource;
 	private PreferencesService preferencesService;
 	private UserService userService;
 	private SHA256Hasher hasher;
-	private User user = new User();
+	private User user;
+	private Preferences preferences;
+	private ConfirmationCode confirmationCode;
+	private Postman postman;
 	
-	public String execute()
+	public String execute() throws IOException
 	{
 		try
 		{
 			
-			if(		StringUtils.isEmpty(user.getFirstname())||
-					StringUtils.isEmpty(user.getUsername())||
-					StringUtils.isEmpty(user.getPassword())
+				if	(		
+					user.getFirstname().isEmpty()||
+					user.getUsername().isEmpty()||
+					user.getPassword().isEmpty()
 					)
 			{
-				response.getWriter().write(messageSource.getMessage("0002",null,null,Locale.US));
+				response.getWriter().write(messageSource.getMessage("0002",null,Locale.US));
 				response.setStatus(HttpStatus.FORBIDDEN.toInt());
 				return null;
 			}
 			
 			Theme theme = preferencesService.getThemeById(1);
-			ConfirmationCode code = new ConfirmationCode();
-			Preferences preferences = new Preferences();
-			
-			code.setLastActionTime(new Date());
+			Date date = new Date();//now
+			confirmationCode.setLastActionTime(date);
+			String code = hasher.encrypt(user.getPassword());
+			confirmationCode.setCode(code);
 			preferences.setTheme(theme);
-			user.setRegDate(new Date());
+			user.setRegDate(date);
 			user.setAuthLevel(AuthType.USER);
-			user.setAccState(AccountState.PENDING_CONFIRMATION);
-			userService.savePreferencesWithUser(user, preferences,code);
+			user.setConfirmationCode(confirmationCode);
+			user.setPreferences(preferences);
+			//try to send the mail
+			postman.sendConfirmationMail(user);
 			
+			// if mail send is successful, set account state as "pending_confirm"
+			user.setAccState(AccountState.PENDING_CONFIRMATION);
+			userService.savePreferencesWithUser(user);
 			response.setStatus(HttpStatus.SUCCESSFUL.toInt());
-			response.getWriter().write(messageSource.getMessage("0003",null,null,Locale.US));
+			response.getWriter().write(messageSource.getMessage("0003",null,Locale.US));
 		}
-		catch (IOException e)
+		catch(MailConnectException m)
 		{
-			e.printStackTrace();
+			// if mail dispatch is failed, set account state as "CONFIRMATION_NOT_SEND"
+			user.setAccState(AccountState.CONFIRMATION_NOT_SEND);
+			userService.savePreferencesWithUser(user);
+			response.getWriter().write(messageSource.getMessage("0006",null,Locale.US));
 		}
+		
 		return null;
 	}
 
@@ -138,7 +156,30 @@ public class SignupAction extends ActionSupport implements ModelDriven<User>,Ser
 	public void setMessageSource(MessageSource messageSource) {
 		this.messageSource = messageSource;
 	}
-	
+
+	public Preferences getPreferences() {
+		return preferences;
+	}
+
+	public void setPreferences(Preferences preferences) {
+		this.preferences = preferences;
+	}
+
+	public ConfirmationCode getConfirmationCode() {
+		return confirmationCode;
+	}
+
+	public void setConfirmationCode(ConfirmationCode confirmationCode) {
+		this.confirmationCode = confirmationCode;
+	}
+
+	public Postman getPostman() {
+		return postman;
+	}
+
+	public void setPostman(Postman postman) {
+		this.postman = postman;
+	}
 	
 	
 }
