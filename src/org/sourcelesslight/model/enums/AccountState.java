@@ -1,10 +1,11 @@
 package org.sourcelesslight.model.enums;
 
 public enum AccountState {
-	PENDING_CONFIRMATION(0),
-	CONFIRMED(1),
-	SUSPENDED(2),
-	BANNED(3);
+	CONFIRMATION_NOT_SEND(0),
+	PENDING_CONFIRMATION(1),
+	CONFIRMED(2),
+	SUSPENDED(3),
+	BANNED(4);
 	
 	private int value;
 	

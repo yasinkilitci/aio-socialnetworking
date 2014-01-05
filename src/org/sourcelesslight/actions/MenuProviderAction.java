@@ -13,9 +13,13 @@ import com.opensymphony.xwork2.ActionSupport;
 public class MenuProviderAction extends ActionSupport implements SessionAware {
 
 	private static final long serialVersionUID = 4516184325584748750L;
-	private User user = new User();
-	private Map<String, Object> session; 
+	
+	//Spring Dependencies
+	private User user;
 	private UserService userService;
+	//Session is injected by Struts2
+	private Map<String, Object> session; 
+	
 	
 	public String execute()
 	{

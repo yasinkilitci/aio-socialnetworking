@@ -22,7 +22,7 @@ public class LoggingAspect {
 		Object args[] = joinpoint.getArgs();
 		String username = (String)args[0];
 		String password = (String)args[1];
-		System.err.println(messageSource.getMessage("L001",new Object[]{username,password},"Default",Locale.US));
+		System.err.println(messageSource.getMessage("L001",new Object[]{username,password},Locale.US));
 	}
 
 	public MessageSource getMessageSource() {

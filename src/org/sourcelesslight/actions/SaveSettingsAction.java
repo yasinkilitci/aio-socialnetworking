@@ -27,12 +27,15 @@ public class SaveSettingsAction extends ActionSupport implements ModelDriven<The
 
 	//This prevents serializing the class to file and deserialize as a different version of class.
 	private static final long serialVersionUID = -5384546532697107457L;
+	
+	// Spring Dependencies
 	private MessageSource messageSource;
 	private PreferencesService preferencesService;
 	private UserService userService;
+	private Theme theme;
+	// Struts2 Dependencies
 	private HttpServletResponse response;
 	private Map<String,Object> session;
-	private Theme theme = new Theme();
 	
 	public String execute()
 	{
@@ -121,7 +124,5 @@ public class SaveSettingsAction extends ActionSupport implements ModelDriven<The
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
-	
-	
-	
+
 }

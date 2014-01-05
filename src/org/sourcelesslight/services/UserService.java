@@ -1,7 +1,6 @@
 package org.sourcelesslight.services;
 
 import java.util.List;
-
 import org.hibernate.CacheMode;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
@@ -13,8 +12,6 @@ import org.hibernate.search.Search;
 import org.hibernate.search.SearchFactory;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.sourcelesslight.hashing.SHA256Hasher;
-import org.sourcelesslight.model.ConfirmationCode;
-import org.sourcelesslight.model.Preferences;
 import org.sourcelesslight.model.User;
 import org.sourcelesslight.model.enums.AuthType;
 import org.springframework.stereotype.Repository;
@@ -46,16 +43,14 @@ public class UserService {
 	}
 	
 	@Transactional(readOnly=false)
-	public void savePreferencesWithUser(User user,Preferences preferences, ConfirmationCode cc)
+	public void savePreferencesWithUser(User user)
 	{
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		try
 		{
-			session.save(preferences);
-			session.save(cc);
-			user.setConfirmationCode(cc);
-			user.setPreferences(preferences);
+			session.save(user.getPreferences());
+			session.save(user.getConfirmationCode());
 			user.setPassword(hasher.encrypt(user.getPassword()));
 			session.save(user);
 			tx.commit();
@@ -97,7 +92,7 @@ public class UserService {
 			User user = (User)session.createQuery("From USERS WHERE USERNAME=:username")
 					.setString("username", username)
 					.uniqueResult();
-			
+			Hibernate.initialize(user.getConfirmationCode());
 			session.close();
 			return user;
 		}
@@ -121,8 +116,14 @@ public class UserService {
 		SearchFactory sf = fullTextSession.getSearchFactory();
 		final QueryBuilder qb = sf.buildQueryBuilder().forEntity(User.class).get();
 		
+		//Prevent getting all records from database
+		// if we pass "*" only, all records will be queried
+		if(keyword.length()>2)
+			keyword += "*";
+		
 		org.apache.lucene.search.Query luceneQuery =
 			    qb.keyword()
+			    	.wildcard()
 			        .onField("username").boostedTo(3)
 			        .matching(keyword)
 			        .createQuery();
@@ -151,44 +152,7 @@ public class UserService {
 			throw h;
 		}
 	}
-	
-	
 
-	@Transactional(readOnly=false)
-	public void saveUser(User user)
-	{
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		try
-		{
-			user.setPassword(hasher.encrypt(user.getPassword()));
-			session.save(user);
-			tx.commit();
-			session.close();
-		}
-		catch(HibernateException e)
-		{
-			throw e;
-		}
-	}
-	
-	@Transactional(readOnly=false)
-	public void deleteUser(User user)
-	{
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		try
-		{
-			session.delete(user);
-			tx.commit();
-			session.close();
-		}
-		catch(HibernateException e)
-		{
-			throw e;
-		}
-	}
-	
 	@Transactional(readOnly=false)
 	public void updateUser(User user)
 	{

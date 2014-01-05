@@ -1,0 +1,41 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+
+	<!-- SMALL DEPENDENCIES -->
+
+	<bean id="User" class="org.sourcelesslight.model.User" scope="prototype" />
+	<bean id="Theme" class="org.sourcelesslight.model.Theme" scope="prototype" />
+	<bean id="Preferences" class="org.sourcelesslight.model.Preferences" scope="prototype" />
+	<bean id="ConfirmationCode" class="org.sourcelesslight.model.ConfirmationCode" scope="prototype" />
+	<bean id="FriendRequest" class="org.sourcelesslight.model.FriendRequest" scope="prototype" />
+
+	<!-- MAIL -->
+	<bean id="Postman" class="org.sourcelesslight.mailing.Postman">
+		<property name="messageSource" ref="messageSource" />
+		<property name="mailSender" ref="mailSender" />
+	</bean>
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mail_host}" />
+		<property name="port" value="${mail_port}" />
+		<property name="username" value="${mail_username}" />
+		<property name="password" value="${mail_password}" />
+
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+
+
+</beans>

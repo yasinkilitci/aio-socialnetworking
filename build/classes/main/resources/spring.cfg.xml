@@ -16,7 +16,7 @@
 		<import resource="spring.servicebeans.xml"/>
 		<import resource="spring.aop.cfg.xml"/>
 		<import resource="spring.struts2actions.xml"/>
-		
+		<import resource="spring.smallbeans.xml"/>
 		
     	<!-- Packages to Scan for Spring Annotations -->
     	

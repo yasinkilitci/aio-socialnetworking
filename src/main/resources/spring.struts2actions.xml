@@ -24,12 +24,14 @@
 		
 		<bean id="menuProviderAction" class="org.sourcelesslight.actions.MenuProviderAction" scope="prototype">
 			<property name="userService" ref="UserService"/>
+			<property name="user" ref="User"/>
 		</bean>
 		
 		<bean id="saveSettingsAction" class="org.sourcelesslight.actions.SaveSettingsAction" scope="prototype">
 			<property name="messageSource" ref="messageSource"/>
 			<property name="userService" ref="UserService"/>
 			<property name="preferencesService" ref="PreferencesService"/>
+			<property name="theme" ref="Theme"/>
 		</bean>
 		
 		<bean id="sendRequestAction" class="org.sourcelesslight.actions.SendRequestAction" scope="prototype">
@@ -44,6 +46,11 @@
 			<property name="messageSource" ref="messageSource"/>
 			<property name="userService" ref="UserService"/>
 			<property name="preferencesService" ref="PreferencesService"/>
+			<property name="user" ref="User"/>
+			<property name="preferences" ref="Preferences"/>
+			<property name="confirmationCode" ref="ConfirmationCode"/>
+			<property name="postman" ref="Postman"/>
+			<property name="hasher" ref="SHA256Hasher"/>
 		</bean>
 		
 </beans>
