@@ -14,11 +14,7 @@
 </head>
 <body>
 	<div class="main-wrapper">
-		
-		<div class="header-wrapper">
-			<!-- LOGO -->
-		</div>
-		
+	
 		<div class="menu-wrapper">
 			<!-- MENU CONTENT -->
 		</div>

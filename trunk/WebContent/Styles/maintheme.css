@@ -16,18 +16,6 @@ div.menu-wrapper,div.content-wrapper,div.copyright-wrapper
     cursor: text;
 }
 
-div.header-wrapper{
-	height: 72px;
-	width: 450px;
-    margin-top: 12px;
-    margin-bottom: 10px;
-	background: url('../../Images/logo_mini_4.png');
-	background-size: cover;
-	-moz-border-radius: 1em 4em 1em 4em;
-	border-radius: 1em 4em 1em 4em;
-	border:0px solid #a1a1a1;
-}
-
 div.content-wrapper
 {
    	height: 500px;
@@ -46,8 +34,31 @@ div.content-wrapper
     box-shadow: 1px 2px 2px rgba(0,0,0,0.6);
 }
 
+div.menu-logo
+{
+	background: url('../Images/logo_mini.png');
+	background-size: cover;
+	height: 40px;
+	width: 145px;
+    margin-left: 15px;
+    margin-top: -5px;
+    z-index: 3;
+    float:left;
+    /*
+	-moz-border-radius: 1em 4em 1em 4em;
+	border-radius: 1em 4em 1em 4em;
+	border:0px solid #a1a1a1;*/
+}
+
+div.menu-buttons
+{
+	margin-bottom: 0px;
+}
+
 div.menu-wrapper
 {
+    
+    z-index: 2;
     /*margin: 4px 4px 4px 4px;*/
     padding: 0px 0px 15px 0px;
     text-align: center;
@@ -56,9 +67,9 @@ div.menu-wrapper
     
     height: 50px;
     /* Border Radius */  
-    -webkit-border-radius: 20px;  
-    -moz-border-radius: 20px;  
-    border-radius: 20px;  
+    -webkit-border-radius: 10px;  
+    -moz-border-radius: 10px;  
+    border-radius: 10px;  
     
     /* Border Shadow */  
     -webkit-box-shadow: 1px 2px 2px rgba(0,0,0,0.6);
