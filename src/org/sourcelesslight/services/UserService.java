@@ -140,7 +140,7 @@ public class UserService {
 		Session session = sessionFactory.openSession();
 		try
 		{
-			List<User> users = (List<User>)session.createQuery("From User where authLevel=:authtype")
+			List<User> users = (List<User>)session.createQuery("From USERS where AUTHLEVEL=:authtype")
 					.setInteger("authtype", AuthType.USER.toInt())
 					.list();
 			
