@@ -6,14 +6,13 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.sourcelesslight.model.User;
-import org.sourcelesslight.test.TestWriteLogtoFile;
 
 @Aspect
 public class LoggingAspect {
 	
 	//Injected by Spring
 	//private MessageSource messageSource;
-	private TestWriteLogtoFile testWriteLogtoFile;
+	private WriteLogToFile writeLogToFile;
 
 	/* run this method each time after the execution of public anyreturntype from this full path: 
 	 * org.sourcelesslight.services.AuthenticationService.performLogin(any parameter)
@@ -35,11 +34,15 @@ public class LoggingAspect {
 		User user = (User)args[0];
 		//System.err.println(messageSource.getMessage("L002",new Object[]{user.getUsername(),user.getPassword()},Locale.US));
 		try {
-			testWriteLogtoFile.write(user);
+			writeLogToFile.write(user);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void setWriteLogToFile(WriteLogToFile writeLogToFile) {
+		this.writeLogToFile = writeLogToFile;
 	}
 
 //	public MessageSource getMessageSource() {
@@ -51,9 +54,6 @@ public class LoggingAspect {
 //	}
 
 
-	public void setTestWriteLogtoFile(TestWriteLogtoFile testWriteLogtoFile) {
-		this.testWriteLogtoFile = testWriteLogtoFile;
-	}
 	
 	
 }
