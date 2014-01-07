@@ -18,7 +18,7 @@ public class AuthenticationService {
 	private SHA256Hasher hasher;
 	
 	@Transactional(readOnly=true)
-	public User performLogin(String username, String password) throws HibernateException
+	public User performLogin(String username, String password, String ip) throws HibernateException
 	{
 		try
 		{
