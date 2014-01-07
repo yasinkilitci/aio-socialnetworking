@@ -16,13 +16,12 @@
 	<!-- AOP and Logging Related Beans -->
 	
 		<bean name="loggingAspect" class="org.sourcelesslight.aspects.LoggingAspect">
-			<property name="writeLogToFile" ref="LoggingToFile"/>
 			<property name="logger" ref="Log4JLogger"/>
 			<property name="messageSource" ref="messageSource"/>
 		</bean>
 		
 		<bean id="Log4JLogger" class="org.apache.log4j.Logger" factory-method="getLogger">
-    		<constructor-arg type="java.lang.String" value="my.Logger" />
+    		<constructor-arg type="java.lang.String" value="MAGNEPAL LOGGER" />
 		</bean>
 		
 </beans>
