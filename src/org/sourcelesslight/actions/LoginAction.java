@@ -60,8 +60,12 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
 					return null;
 				}
 				
-				//request.getRemoteAddr();
-				User user = authenticationService.performLogin(username, password);
+				// is client behind something?
+				String ipAddress = request.getHeader("X-FORWARDED-FOR");
+				if (ipAddress == null) {
+					ipAddress = request.getRequestURI();
+				}
+				User user = authenticationService.performLogin(username, password,ipAddress);
 					if(user!=null)
 					{
 						/* Successful Login */

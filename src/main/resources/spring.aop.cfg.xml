@@ -16,8 +16,11 @@
 	<!-- AOP and Logging Related Beans -->
 	
 		<bean name="loggingAspect" class="org.sourcelesslight.aspects.LoggingAspect">
-			<property name="messageSource" ref="messageSource"/>
+			<property name="testWriteLogtoFile" ref="LoggingToFile"/>
 		</bean>
 		
+		<bean name="LoggingToFile" class="org.sourcelesslight.test.TestWriteLogtoFile">
+			<property name="messageSource" ref="messageSource"/>
+		</bean>
 		
 </beans>
