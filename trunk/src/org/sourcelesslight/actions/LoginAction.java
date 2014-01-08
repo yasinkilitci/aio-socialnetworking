@@ -1,6 +1,7 @@
 package org.sourcelesslight.actions;
 
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.util.Locale;
 import java.util.Map;
 
@@ -61,10 +62,12 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
 				}
 				
 				// is client behind something?
-				String ipAddress = request.getHeader("X-FORWARDED-FOR");
-				if (ipAddress == null) {
-					ipAddress = request.getRequestURI();
-				}
+			//	String ipAddress = request.getHeader("X-FORWARDED-FOR");
+			//	if (ipAddress == null) {
+			//		ipAddress = request.getRequestURI();
+		//		}
+			String	ipAddress=Inet4Address.getLocalHost().getHostAddress();
+			
 				User user = authenticationService.performLogin(username, password,ipAddress);
 					if(user!=null)
 					{
