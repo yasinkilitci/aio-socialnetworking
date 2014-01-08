@@ -41,14 +41,14 @@ public class LoggingAspect {
 
 	}
 	
-	@After("execution(public *  org.sourcelesslight.actions.LogoutAction.session.remove(..))")
-	public void Logging_LogoutAdvice(JoinPoint joinpoint){
-		
-		Object args[]=joinpoint.getArgs();
-		User user = (User)args[0];
-		logger.info(messageSource.getMessage("L003",new Object[]{user.getUsername(),user.getPassword()},Locale.US));
-
-	}
+//	@After("execution(public *  org.sourcelesslight.actions.LogoutAction.session.remove(..))")
+//	public void Logging_LogoutAdvice(JoinPoint joinpoint){
+//		
+//		Object args[]=joinpoint.getArgs();
+//		User user = (User)args[0];
+//		logger.info(messageSource.getMessage("L003",new Object[]{user.getUsername(),user.getPassword()},Locale.US));
+//
+//	}
 	
 
 	public void setLogger(Logger logger) {
