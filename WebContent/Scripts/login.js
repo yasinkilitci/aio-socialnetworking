@@ -31,7 +31,8 @@ $("#btnLogin").click(function () {
 
 function sendCreateFormViaAjax() {
     
-    var formData =
+	$("#btnLogin").attr("disabled", true);
+	var formData =
         {
             username: $("#txtUsername").val(),
             password: $("#txtPassword").val(),
@@ -75,6 +76,7 @@ function sendCreateFormViaAjax() {
                         open: function (event, ui) { $('.ui-widget-overlay').bind('click', function () { $("#errordialog").dialog('close'); }); },
                         close: function () {
                             $(this).dialog('destroy').remove();
+                            $("#btnLogin").removeAttr("disabled");
                         }
                     }).dialog('open');
                     
@@ -108,6 +110,7 @@ function sendCreateFormViaAjax() {
                         open: function (event, ui) { $('.ui-widget-overlay').bind('click', function () { $("#errordialog").dialog('close'); }); },
                         close: function () {
                             $(this).dialog('destroy').remove();
+                            $("#btnLogin").removeAttr("disabled");
                         }
                     }).dialog('open');
 
