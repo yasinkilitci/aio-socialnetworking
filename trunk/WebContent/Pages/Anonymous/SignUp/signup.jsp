@@ -54,7 +54,8 @@ $("#btnSubmit").click(function () {
 });
 
 function sendCreateFormViaAjax() {
-    
+	
+	$("#btnSubmit").attr("disabled", true);
     var formData =
         {
             firstname: $("#frmSignup_firstname").val(),
@@ -131,6 +132,7 @@ function sendCreateFormViaAjax() {
                         open: function (event, ui) { $('.ui-widget-overlay').bind('click', function () { $("#errordialog").dialog('close'); }); },
                         close: function () {
                             $(this).dialog('destroy').remove();
+                            $("#btnSubmit").removeAttr("disabled");
                         }
                     }).dialog('open');
 
@@ -163,6 +165,7 @@ function sendCreateFormViaAjax() {
                         open: function (event, ui) { $('.ui-widget-overlay').bind('click', function () { $("#errordialog").dialog('close'); }); },
                         close: function () {
                             $(this).dialog('destroy').remove();
+                            $("#btnSubmit").removeAttr("disabled");
                         }
                     }).dialog('open');
 							
