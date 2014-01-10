@@ -10,7 +10,8 @@
 	<include file="org/sourcelesslight/interceptors/struts.interceptors.xml"></include>
 	
 	
-	<package name="friendfinder" namespace="/FriendFinder" extends="struts-default">
+	<package name="friendfinder" namespace="/FriendFinder" extends="struts-default,json-default">
+		
 		<action name="list" class="friendFinderAction">
 			<result name="success">/Pages/User/friendfinder.jsp</result>
 			<result name="failure" type="redirectAction">
@@ -18,8 +19,17 @@
             	<param name="namespace">/</param>
 			</result>
 		</action>
+		
+		<action name="search" class="friendFinderAction" method="executeSearch">
+			<result name="success">/Pages/User/searchresult.jsp</result>
+		</action>
+		
+		<!-- 
+		<action name="getJSONResult" class="friendFinderAction" method="executeSearch">
+			<result type="json"></result>
+		</action> -->
 	</package>
-	
+
 	<package name="authentication" namespace="/Authentication" extends="customInterceptors">
 
 		<action name="login" class="loginAction">

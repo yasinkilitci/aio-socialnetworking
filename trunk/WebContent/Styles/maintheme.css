@@ -50,6 +50,16 @@ div.menu-logo
 	border:0px solid #a1a1a1;*/
 }
 
+div.menu-greeting
+{
+	font-size: 15px;
+    color: #ffffff; 
+    display: inline-block;
+    float: left;
+    margin-top: 5px;
+    margin-left: 30px;
+}
+
 div.menu-buttons
 {
 	margin-bottom: 0px;

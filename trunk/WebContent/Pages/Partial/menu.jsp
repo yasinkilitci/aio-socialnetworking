@@ -1,11 +1,16 @@
-
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/Scripts/menu.js" /></script>
 
 <div id="menu-css">
-	<div class="menu-logo"></div>
+	<div class="menu-logo">
+	</div>
+	<div class="menu-greeting">
+		<span>Welcome </span><s:property value="%{user.firstname}"/> <s:property value="%{user.lastname}"/><span>!</span>
+	</div>
 	<div class="menu-buttons">
 		<ul>
 			<li><a href="#" id="lnkHome">Home</a></li>

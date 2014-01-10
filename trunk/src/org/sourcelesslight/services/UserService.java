@@ -128,6 +128,8 @@ public class UserService {
 			        .matching(keyword)
 			        .createQuery();
 		
+		
+		
 		org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery( luceneQuery );
 		
 		return (List<User>)fullTextQuery.list();
