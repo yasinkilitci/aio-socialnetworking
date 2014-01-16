@@ -1,5 +1,6 @@
 $(document).ready(function(){
 	
+	$("div.submenu-wrapper").load("./Pages/Partial/submenu.action");
 	
 	$("#lnkHome").click(function(){
 
