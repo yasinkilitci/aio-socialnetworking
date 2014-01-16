@@ -27,6 +27,9 @@
 			<property name="user" ref="User"/>
 		</bean>
 		
+		<bean id="submenuProviderAction" class="org.sourcelesslight.actions.SubmenuProviderAction" scope="prototype">
+		</bean>
+		
 		<bean id="saveSettingsAction" class="org.sourcelesslight.actions.SaveSettingsAction" scope="prototype">
 			<property name="messageSource" ref="messageSource"/>
 			<property name="userService" ref="UserService"/>

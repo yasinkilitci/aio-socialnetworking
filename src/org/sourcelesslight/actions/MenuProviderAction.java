@@ -19,7 +19,7 @@ public class MenuProviderAction extends ActionSupport implements SessionAware {
 	private UserService userService;
 	//Session is injected by Struts2
 	private Map<String, Object> session; 
-	
+	private String rendername;
 	
 	public String execute()
 	{
@@ -28,6 +28,7 @@ public class MenuProviderAction extends ActionSupport implements SessionAware {
 		{
 			user = userService.getUserById(Integer.parseInt(sessionId.toString()));
 		}
+		rendername = "ilkeryasinrender";
 		return SUCCESS;
 	}
 
@@ -50,6 +51,14 @@ public class MenuProviderAction extends ActionSupport implements SessionAware {
 
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+
+	public String getRendername() {
+		return rendername;
+	}
+
+	public void setRendername(String rendername) {
+		this.rendername = rendername;
 	}
 
 	

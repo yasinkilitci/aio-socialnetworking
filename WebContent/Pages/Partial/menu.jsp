@@ -1,15 +1,23 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
-<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="s" uri="/struts-tags"%>
+
+<div class="submenu-wrapper">
+
+</div>
+
 
 <script type="text/javascript"
-	src="${pageContext.request.contextPath}/Scripts/menu.js" /></script>
+	src="${pageContext.request.contextPath}/Scripts/menu.js">
+	
+</script>
 
 <div id="menu-css">
-	<div class="menu-logo">
-	</div>
+	<div class="menu-logo"></div>
 	<div class="menu-greeting">
-		<span>Welcome </span><s:property value="%{user.firstname}"/> <s:property value="%{user.lastname}"/><span>!</span>
+		<span>Welcome </span>
+		<s:property value="%{user.firstname}" />
+		<s:property value="%{user.lastname}" />
+		<span>!</span>
 	</div>
 	<div class="menu-buttons">
 		<ul>
@@ -19,9 +27,10 @@
 				test="user.authLevel==@org.sourcelesslight.model.enums.AuthType@USER">
 				<script>
 					$(function() {
-						$('div.menu-wrapper').css('background','rgba(120,0,0,1)');
-						$("div.content-wrapper,div.copyright-wrapper")
-						.css("background", "rgba(255,150,0,0.6)");
+						$('div.menu-wrapper').css('background',
+								'rgba(120,0,0,1)');
+						$("div.content-wrapper,div.copyright-wrapper").css(
+								"background", "rgba(255,150,0,0.6)");
 					});
 				</script>
 				<li><a href="#" id="lnkDiscover">Discover</a></li>
@@ -34,8 +43,9 @@
 				test="user.authLevel==@org.sourcelesslight.model.enums.AuthType@ADMIN">
 				<script>
 					$(function() {
-						$("div.menu-wrapper,div.content-wrapper,div.copyright-wrapper")
-							.css("background", "rgba(255,150,0,0.6)");
+						$(
+								"div.menu-wrapper,div.content-wrapper,div.copyright-wrapper")
+								.css("background", "rgba(255,150,0,0.6)");
 					});
 				</script>
 				<li><a href="#" id="lnkDiscover">Manage Users</a></li>
@@ -53,9 +63,11 @@
 				<script>
 					$(function() {
 						$("body").css("background", "rgba(0,128,255,1)");
-						$("div.menu-wrapper,div.content-wrapper,div.copyright-wrapper")
-						.css("background", "rgba(255,150,0,1)");
-						$("div.content-wrapper").load("./Pages/Anonymous/Authentication/login.jsp");
+						$(
+								"div.menu-wrapper,div.content-wrapper,div.copyright-wrapper")
+								.css("background", "rgba(255,150,0,1)");
+						$("div.content-wrapper").load(
+								"./Pages/Anonymous/Authentication/login.jsp");
 					});
 				</script>
 				<li><a href="#" id="lnkAbout">About</a></li>
@@ -81,3 +93,5 @@
 
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/Styles/maintheme.css"></link>
+
+

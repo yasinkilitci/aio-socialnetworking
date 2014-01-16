@@ -12,7 +12,7 @@ public class TestUserService {
 	{
 		AbstractApplicationContext context = ApplicationContextProvider.getApplicationContext();
 		UserService userService = context.getBean("UserService",UserService.class);
-		//userService.refreshIndexes();
+		userService.refreshIndexes();
 		List<User> users = userService.searchUser("ilke");
 		
 		System.out.println("Query executed!");

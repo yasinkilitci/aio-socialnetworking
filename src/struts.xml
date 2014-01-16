@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC
-"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
-"http://struts.apache.org/dtds/struts-2.3.dtd">
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
  
 <struts>
 	
 	<constant name="struts.devMode" value="false"/> 
 	
-	<include file="org/sourcelesslight/interceptors/struts.interceptors.xml"></include>
+	<include file="org/sourcelesslight/interceptors/struts-interceptors.xml"></include>
+	
+	<include file="struts-jsf.xml"></include>
 	
 	
 	<package name="friendfinder" namespace="/FriendFinder" extends="struts-default,json-default">
@@ -69,14 +71,7 @@
 			<result>Pages/Anonymous/home.jsp</result>
 		</action>
 	</package>
-	
-	<package name="" namespace="/" extends="customInterceptors">
-		<action name="menu" class="menuProviderAction">
-			<interceptor-ref name="homeStack"/>
-			<result name="success">/Pages/Partial/menu.jsp</result>
-		</action>
-	</package>
-	
+
 	<package name="settings" namespace="/ControlPanel" extends="customInterceptors">
  
 		   <action name="settings" class="settingsAction">
