@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="logentriesAppender" class="com.logentries.log4j.LogentriesAppender">
+		<param name="Token" value="89b703fe-d407-4227-89e0-87bf913eeca4" />
+		<param name="Ssl" value="false" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="conversionPattern"
+				value="%d{EEE MMM dd HH:mm:ss ZZZ yyyy},
+(%F:%L) %-5p: %m" />
+		</layout>
+
+	</appender>
+
+	<appender name="papertrailsSyslog" class="org.apache.log4j.net.SyslogAppender">
+		<errorHandler class="org.apache.log4j.helpers.OnlyOnceErrorHandler" />
+		<param name="Facility" value="LOCAL7" />
+		<param name="FacilityPrinting" value="false" />
+		<param name="Header" value="true" />
+		<param name="SyslogHost" value="logs.papertrailapp.com:514" />
+		<param name="ConversionPattern" value="%p: %c{2} %x %m %n" />
+	</appender>
+	
+	
+ 
+    <appender name="stdOut" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="conversionPattern" value="%-7p %d [%t] %c %x - %m%n" />
+        </layout>
+    </appender>
+ 
+    <!-- package level log levels can be define -->
+    <category name="com.res.common.controller">
+        <priority value="debug" />
+    </category>
+ 
+ 
+    <!-- Root Logger trace/debug/info/warn/error/fatal/off> -->
+    <!-- Appender Disabled -->
+    <root>
+        <priority value="info" />
+        <appender-ref ref="logentriesAppender"/>
+      	<appender-ref ref="papertrailsSyslog"/>
+        <appender-ref ref="stdOut" />
+    </root>
+ 
+</log4j:configuration>

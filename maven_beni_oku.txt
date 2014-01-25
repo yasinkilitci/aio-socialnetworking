@@ -1,0 +1,17 @@
+sýnýflar için konum:
+src / main / java
+xml dosyalarý için konum:
+src / main / resources
+properties dosyalarý için konum:
+src / main / resources / resourcebundles
+
+javascript resources için konum  (projenin properties'inden javascript kýsmýndan deðiþtiriliyor.)
+src / main / webapp
+
+web içerik dosyalarý konum:
+src / main / webapp
+
+maven'ýn derleme klasörü (daha sonra deðiþtirilip doðrudan tomcat veya glassfish'Ýn içerisi hedef alýnabilir.): 
+/target klasörü
+
+jar dosyalarý somut olarak elimizde bulunmuyor. Yalnýzca pom.xml dosyasý var.
