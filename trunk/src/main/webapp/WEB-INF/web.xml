@@ -1,59 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app id="ietc2-prototype" metadata-complete="false" version="3.0"
- xmlns="http://java.sun.com/xml/ns/javaee"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
- <display-name>MagnePal</display-name>
- <context-param>
-  <param-name>contextConfigLocation</param-name>
-  <param-value>classpath:spring.cfg.xml</param-value>
- </context-param>
- <context-param>
-  <param-name>log4jConfigLocation</param-name>
-  <param-value>classpath:log4j.xml</param-value>
- </context-param>
- <!-- <welcome-file-list> <welcome-file>index.jsp</welcome-file> </welcome-file-list> -->
- <context-param>
-  <param-name>webAppRootKey</param-name>
-  <param-value>ietc2-prototype</param-value>
- </context-param>
- <filter>
-  <filter-name>struts2</filter-name>
-  <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
-  <init-param>
-   <param-name>actionPackages</param-name>
-   <param-value>org.sourcelesslight.actions</param-value>
-  </init-param>
- </filter>
- <filter-mapping>
-  <filter-name>struts2</filter-name>
-  <url-pattern>/*</url-pattern>
- </filter-mapping>
- <listener>
-  <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
- </listener>
- <listener>
-  <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
- </listener>
- <!-- MyFaces Servlet Context Listener -->
- <listener>
-  <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
- </listener>
- <!-- Faces Servlet -->
- <servlet>
-  <servlet-name>faces</servlet-name>
-  <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-  <load-on-startup>1</load-on-startup>
- </servlet>
- <servlet>
-  <servlet-name>JspSupportServlet</servlet-name>
-  <servlet-class>org.apache.struts2.views.JspSupportServlet</servlet-class>
-  <load-on-startup>1</load-on-startup>
- </servlet>
- <!-- Faces Servlet Mapping 
- JavaServer Faces Servlet Mapping, not called directly -->
- <servlet-mapping>
-  <servlet-name>faces</servlet-name>
-  <url-pattern>*.action</url-pattern>
- </servlet-mapping>
- 
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+	<display-name>MagnePal</display-name>
+	
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:spring.cfg.xml</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>classpath:log4j.xml</param-value>
+	</context-param>
+	
+	<!-- <welcome-file-list> <welcome-file>index.jsp</welcome-file> </welcome-file-list> -->
+	<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>ietc2-prototype</param-value>
+	</context-param>
+	
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+		<init-param>
+			<param-name>actionPackages</param-name>
+			<param-value>org.sourcelesslight.actions</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+	
+	<!-- Faces Servlet -->
+	<servlet>
+		<servlet-name>faces</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>JspSupportServlet</servlet-name>
+		<servlet-class>org.apache.struts2.views.JspSupportServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<!-- Faces Servlet Mapping JavaServer Faces Servlet Mapping, not called 
+		directly -->
+	<servlet-mapping>
+		<servlet-name>faces</servlet-name>
+		<url-pattern>*.action</url-pattern>
+	</servlet-mapping>
+
 </web-app>

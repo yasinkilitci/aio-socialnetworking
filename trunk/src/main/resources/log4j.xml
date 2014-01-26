@@ -12,8 +12,18 @@
 		</layout>
 
 	</appender>
+	
+	<appender name="fileAppender" class="org.apache.log4j.FileAppender">
+        <param name="file" value="${com.sun.aas.instanceRoot}/logs/magnepal/LogFile.log" />
+        <param name="maxFileSize" value="5MB" />
+        <param name="maxBackupIndex" value="50" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="conversionPattern" value="%-7p %d [%t] %c %x - %m%n" />
+        </layout>
+ 
+    </appender>
 
-	<appender name="papertrailsSyslog" class="org.apache.log4j.net.SyslogAppender">
+	<appender name="papertrailSyslog" class="org.apache.log4j.net.SyslogAppender">
 		<errorHandler class="org.apache.log4j.helpers.OnlyOnceErrorHandler" />
 		<param name="Facility" value="LOCAL7" />
 		<param name="FacilityPrinting" value="false" />
@@ -22,8 +32,6 @@
 		<param name="ConversionPattern" value="%p: %c{2} %x %m %n" />
 	</appender>
 	
-	
- 
     <appender name="stdOut" class="org.apache.log4j.ConsoleAppender">
         <layout class="org.apache.log4j.PatternLayout">
             <param name="conversionPattern" value="%-7p %d [%t] %c %x - %m%n" />
@@ -40,8 +48,9 @@
     <!-- Appender Disabled -->
     <root>
         <priority value="info" />
+        <appender-ref ref="fileAppender"/>
         <appender-ref ref="logentriesAppender"/>
-      	<appender-ref ref="papertrailsSyslog"/>
+      	<appender-ref ref="papertrailSyslog"/>
         <appender-ref ref="stdOut" />
     </root>
  
