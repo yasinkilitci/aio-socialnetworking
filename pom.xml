@@ -22,35 +22,7 @@
 			<artifactId>javaee-api</artifactId>
 			<version>7.0</version>
 		</dependency>
-            
-		
-	<!-- MYFACES DEP -->
-
-	<dependency>
-		<groupId>org.apache.myfaces.core</groupId>
-		<artifactId>myfaces-api</artifactId>
-		<version>1.1.2</version>
-		<exclusions>
-			<exclusion>
-				<artifactId>commons-logging</artifactId>
-				<groupId>commons-logging</groupId>
-			</exclusion>
-		</exclusions>
-	</dependency>
-
-	<dependency>
-		<groupId>org.apache.myfaces.core</groupId>
-		<artifactId>myfaces-impl</artifactId>
-		<version>1.1.2</version>
-		<exclusions>
-			<exclusion>
-				<artifactId>commons-logging</artifactId>
-				<groupId>commons-logging</groupId>
-			</exclusion>
-		</exclusions>
-	</dependency>
-            
-            
+   
 
 	<!-- SPRING DEPENDENCIES -->
 
@@ -151,7 +123,7 @@
 	<dependency>
 		<groupId>org.postgresql</groupId>
 		<artifactId>postgresql</artifactId>
-		<version>9.3-1100-jdbc41</version>
+		<version>9.3-1100-jdbc4</version>
 	</dependency>
     
 	<dependency>
@@ -288,7 +260,7 @@
 		<groupId>com.logentries</groupId>
 		<artifactId>logentries-appender</artifactId>
 		<version>1.1.11</version>
-	</dependency>   
+	</dependency>  
       
      <!-- STRUTS 2 DEPENDENCIES -->
 

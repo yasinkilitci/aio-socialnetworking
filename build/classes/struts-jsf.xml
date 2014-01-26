@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+  
+  <package name="jsf" extends="jsf-default" namespace="/Pages">
+
+      <result-types>
+          <result-type name="jsf" class="org.apache.struts2.jsf.FacesResult" />
+      </result-types>
+
+    <interceptors>
+      <interceptor-stack name="jsfFullStack">
+        <interceptor-ref name="params" />
+        <interceptor-ref name="basicStack"/>
+        <interceptor-ref name="jsfStack"/>
+      </interceptor-stack>
+
+		<!-- 
+	<interceptor-stack name="jsfStack2">
+		<interceptor-ref name="defaultStack" />
+		<interceptor-ref name="jsfSetup">
+			<param name="navigationHandler">org.apache.struts2.jsf.StrutsNavigationHandler</param>
+			<param name="propertyResolver">
+				org.apache.myfaces.el.PropertyResolverImpl
+			</param>
+			<param name="variableResolver">
+				org.apache.struts2.jsf.StrutsVariableResolver
+			</param>
+		</interceptor-ref>
+		<interceptor-ref name="jsfRestore" />
+		<interceptor-ref name="jsfApply" />
+		<interceptor-ref name="jsfValidate" />
+		<interceptor-ref name="jsfUpdate" />
+		<interceptor-ref name="jsfInvoke" />
+	</interceptor-stack>
+     -->
+     
+    </interceptors>
+
+    <default-interceptor-ref name="jsfFullStack"/>
+
+  </package>
+  
+  	<package name="jsf.menu" namespace="/Pages/Partial" extends="jsf">
+  	
+		<action name="menu" class="menuProviderAction">
+			<interceptor-ref name="jsfFullStack" />
+			<result name="success" type="jsf"></result>
+		</action>
+		
+		<action name="submenu" class="submenuProviderAction">
+			<interceptor-ref name="jsfFullStack" />
+			<result name="success" type="jsf">
+				 <param name="location">/Pages/Partial/submenu.jsp</param>
+			</result>
+		</action>
+		
+	</package>
+  
+  
+  
+  </struts>
+
+
