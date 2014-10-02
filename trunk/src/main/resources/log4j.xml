@@ -14,7 +14,7 @@
 	</appender>
 	
 	<appender name="fileAppender" class="org.apache.log4j.FileAppender">
-        <param name="file" value="${com.sun.aas.instanceRoot}/logs/magnepal/LogFile.log" />
+        <param name="file" value="${catalina.home}/logs/magnepal/LogFile.log" />
         <param name="maxFileSize" value="5MB" />
         <param name="maxBackupIndex" value="50" />
         <layout class="org.apache.log4j.PatternLayout">

@@ -54,7 +54,7 @@
 						
 						<!-- HIBERNATE SEARCH CONFIG -->
 						<prop key="hibernate.search.default.directory_provider">filesystem</prop>
-						<prop key="hibernate.search.default.indexBase">${com.sun.aas.instanceRoot}/indexes/lucene</prop>
+						<prop key="hibernate.search.default.indexBase">${catalina.home}/indexes/lucene</prop>
 						<prop key="hibernate.search.lucene_version">LUCENE_CURRENT</prop>
 					</props>
 				</property> 

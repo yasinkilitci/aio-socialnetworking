@@ -5,11 +5,11 @@
  
 <struts>
 	
-	<constant name="struts.devMode" value="false"/> 
+<!-- 	<constant name="struts.devMode" value="false"/>  -->
 	
 	<include file="struts-interceptors.xml"></include>
 	
-	<include file="struts-jsf.xml"></include>
+<!-- 	<include file="struts-jsf.xml"></include> -->
 	
 	
 	<package name="friendfinder" namespace="/FriendFinder" extends="struts-default,json-default">
@@ -87,5 +87,14 @@
 		   </action>
 		   
   	</package>
+  	
+  	<package name="menu-package" namespace="/Pages/Partial" extends="customInterceptors">
+  	
+		<action name="menu" class="menuProviderAction">
+			<interceptor-ref name="homeStack" />
+			<result name="success">/Pages/Partial/menu.jsp</result>
+		</action>
+		
+	</package>
 	
 </struts>
