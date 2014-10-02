@@ -276,11 +276,11 @@
 		</exclusions>
 	</dependency>
 	
-	<dependency>
-		<groupId>org.apache.struts</groupId>
-		<artifactId>struts2-jsf-plugin</artifactId>
-		<version>2.3.15.1</version>
-	</dependency>
+<!-- 	<dependency> -->
+<!-- 		<groupId>org.apache.struts</groupId> -->
+<!-- 		<artifactId>struts2-jsf-plugin</artifactId> -->
+<!-- 		<version>2.3.15.1</version> -->
+<!-- 	</dependency> -->
 	
 	<dependency>
 		<groupId>org.apache.struts</groupId>
